@@ -2,14 +2,14 @@
 
 **Utah Valley University**  
 **Professor Qudrat E Alahy Ratul**  
-**Class:** Computer Science 2450: Software Engineering I  
+**Class:** Computer Science 2450 - Software Engineering I  
 
 ### Team Members 👨‍💻
 
 - Bryan Powell
 - Taylor Oldham
 - Nathaniel Wilson
-- Timothy Faupusa
+- Timothy Faupusa  
 ---
 
 ### Description ✍️
