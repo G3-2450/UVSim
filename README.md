@@ -59,5 +59,5 @@
 ### Contact
 
 **If you have questions, contact us at:**
-(Emails/ Phone #'s)
-Or open an issue on Github
+- (Emails/ Phone #'s)
+- Or open an issue on Github
