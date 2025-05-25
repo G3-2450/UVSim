@@ -22,15 +22,15 @@ Timothy Faupusa
 
 ### Programming Language Selection
 
-**Front-end:** HTML, CSS, Javascript
+**Front-end:** HTML, CSS, Javascript  
 **Back-end:** Python
 
 ### Source Control Setup
 
-**Tool Required:** Github (public repository)
+**Tool Required:** Github (public repository)  
 **Repository Link:** 
 
 ### Project Management Tool Setup
 
-**Tool Required:** Zenhub Boards (integrated into Github)
+**Tool Required:** Zenhub Boards (integrated into Github)  
 **Link:**
