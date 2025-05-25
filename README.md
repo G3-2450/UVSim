@@ -1,8 +1,8 @@
 # Group 3 - Final Project
 
-**Utah Valley University**
-**Professor Qudrat E Alahy Ratul**
-**Class:** Computer Science 2450: Software Engineering I
+**Utah Valley University**  
+**Professor Qudrat E Alahy Ratul**  
+**Class:** Computer Science 2450: Software Engineering I  
 
 ### Team Members 👨‍💻
 
