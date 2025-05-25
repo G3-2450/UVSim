@@ -3,10 +3,10 @@
 
 ### Group 3 Members (Names & Github Usernames)
 
-Bryan Powell
-Taylor Oldham
-Nathaniel Wilson
-Timothy Faupusa
+Bryan Powell  
+Taylor Oldham  
+Nathaniel Wilson  
+Timothy Faupusa  
 
 ### Proposed Weekly Meeting Schedule
 
