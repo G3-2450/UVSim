@@ -15,10 +15,10 @@ Timothy Faupusa
 
 ### Scrum Master Rotation Plan ###
 
-**Sprint 1:** 
-**Sprint 2:** 
-**Sprint 3:** 
-**Sprint 4:** 
+**Sprint 1:**  
+**Sprint 2:**  
+**Sprint 3:**   
+**Sprint 4:**   
 
 ### Programming Language Selection
 
