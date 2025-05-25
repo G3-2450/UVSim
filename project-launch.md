@@ -10,8 +10,8 @@ Timothy Faupusa
 
 ### Proposed Weekly Meeting Schedule
 
-**Official Meeting Time:**
-**Additional Meeting Time:**
+- **Official Meeting Time:**
+- **Additional Meeting Time:**
 
 ### Scrum Master Rotation Plan ###
 
@@ -21,6 +21,9 @@ Timothy Faupusa
 **Sprint 4:** 
 
 ### Programming Language Selection
+
+**Front-end:** HTML, CSS, Javascript
+**Back-end:** Python
 
 ### Source Control Setup
 
