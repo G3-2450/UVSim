@@ -4,7 +4,7 @@
 **Professor Qudrat E Alahy Ratul**
 **Class:** Computer Science 2450: Software Engineering I
 
-### Team Members
+### Team Members 👨‍💻
 
 - Bryan Powell
 - Taylor Oldham
@@ -12,7 +12,7 @@
 - Timothy Faupusa
 ---
 
-### Description
+### Description ✍️
 
 ---
 
@@ -20,7 +20,7 @@
 
 ---
 
-### Technology Used
+### Technology Used 💻
 **Languages Used:**
 **Front End:**
 **Back End:**
@@ -32,7 +32,7 @@
 
 ---
 
-### Project Timeline (Sprints & Scrum Master Schedule)
+### Project Timeline (Sprints & Scrum Master Schedule) 📆 🏃‍♂️
 
 ##### Sprint 1:
 
@@ -56,7 +56,7 @@
 - **Details:**
 ---
 
-### Contact
+### Contact ☎️ 📧
 
 **If you have questions, contact us at:**
 - (Emails/ Phone #'s)
