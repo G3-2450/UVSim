@@ -20,12 +20,12 @@
 
 ---
 
-### Technology Used 💻
-**Languages Used:**
-**Front End:**
-**Back End:**
-**Dataase:**
-**Tools/Project Management:** Github, Zenhub
+### Technology Used 💻  
+**Languages Used:**  
+**Front End:**  
+**Back End:**  
+**Dataase:**  
+**Tools/Project Management:** Github, Zenhub  
 ---
 
 ### Project Structure
