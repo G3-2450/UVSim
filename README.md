@@ -21,11 +21,11 @@
 ---
 
 ### Technology Used 💻  
-**Languages Used:**  
-**Front End:**  
-**Back End:**  
-**Dataase:**  
-**Tools/Project Management:** Github, Zenhub  
+- **Languages Used:**  
+- **Front End:** Python GUI  
+- **Back End:** Python   
+- **Dataase:**  
+- **Tools/Project Management:** Github, Zenhub  
 ---
 
 ### Project Structure
