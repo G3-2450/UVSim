@@ -20,12 +20,12 @@
 
 ---
 
-### Technology Used 💻  
-- **Languages Used:**  
+### Technology Used 💻   
 - **Front End:** Python GUI  
 - **Back End:** Python   
 - **Dataase:**  
-- **Tools/Project Management:** Github, Zenhub  
+- **Tools/Project Management:**
+  - Zenhub: https://shorturl.at/1RH8Z
 ---
 
 ### Project Structure
