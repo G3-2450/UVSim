@@ -1,5 +1,4 @@
 
-# Milestone One
 
 ### Group 3 Members (Names & Github Usernames)
 
@@ -10,8 +9,8 @@ Timothy Faupusa
 
 ### Proposed Weekly Meeting Schedule
 
-- **Official Meeting Time:**
-- **Additional Meeting Time:**
+- **Official Meeting Time:** Sundays @ 1:30pm
+- **Additional Meeting Time:** Wednesdays @ 5:00pm
 
 ### Scrum Master Rotation Plan ###
 
@@ -22,15 +21,14 @@ Timothy Faupusa
 
 ### Programming Language Selection
 
-**Front-end:** HTML, CSS, Javascript  
+**Front-end:** Python GUI
 **Back-end:** Python
 
 ### Source Control Setup
 
 **Tool Required:** Github (public repository)  
-**Repository Link:** 
 
 ### Project Management Tool Setup
 
 **Tool Required:** Zenhub Boards (integrated into Github)  
-**Link:**
+**Link:** https://shorturl.at/1RH8Z
