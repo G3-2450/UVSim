@@ -6,7 +6,6 @@
 
 ### Team Members 👨‍💻
 
-- Bryan Powell
 - Taylor Oldham
 - Nathaniel Wilson
 - Timothy Faupusa  
@@ -36,24 +35,20 @@
 
 ##### Sprint 1:
 
-- **Time Frame:** 
-- **Scrum Master:**
-- **Details:**
+- **Time Frame:** June 2-16, 2025
+- **Scrum Master:** Taylor Oldham
 
 ##### Sprint 2:
 - **Time Frame:** 
 - **Scrum Master:**
-- **Details:**
 
 ##### Sprint 3:
 - **Time Frame:** 
 - **Scrum Master:**
-- **Details:**
 
 ##### Sprint 4:
 - **Time Frame:** 
 - **Scrum Master:**
-- **Details:**
 ---
 
 ### Contact ☎️ 📧
