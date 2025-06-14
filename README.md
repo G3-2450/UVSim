@@ -1,4 +1,5 @@
-# Group 3 - Final Project
+ # CS2450 Group 3 - UVSim  
+
 
 **Utah Valley University**  
 **Professor Qudrat E Alahy Ratul**  
