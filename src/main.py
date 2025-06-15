@@ -21,8 +21,8 @@ def run_program(memory):
 
     while program_counter < len(memory):
         instruction = memory[program_counter]
-        opcode = abs(instruction) // 100
-        operand = abs(instruction) % 100
+        opcode = abs(instruction) // 100    # first two digits
+        operand = abs(instruction) % 100    # last two digits
 
         if opcode == 10:
             READ(memory, operand)

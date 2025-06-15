@@ -15,16 +15,16 @@ Arithmetic Operations (ADD, SUBTRACT, DIVIDE, and MULTIPLY)
 #    memory to the word in the accumulator (leave the result in the accumulator).
 
 
-def add(accumulator, memory_value):
+def ADD(accumulator, memory_value):
     return accumulator + memory_value
 
-def subtract(accumulator, memory_value):
+def SUBTRACT(accumulator, memory_value):
     return accumulator - memory_value
 
-def divide(accumulator, memory_value):
+def DIVIDE(accumulator, memory_value):
     if memory_value == 0:
         raise ZeroDivisionError("Cannot divide by zero.")
     return accumulator // memory_value
 
-def multiply(accumulator, memory_value):
+def MULTIPLY(accumulator, memory_value):
     return accumulator * memory_value
