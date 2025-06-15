@@ -14,7 +14,7 @@ def BRANCH(nextProgramCounter):
     
 
 def BRANCHNEG(currentProgramCounter, nextProgramCounter, accumulator):
-    if accumulator > 0:
+    if accumulator >= 0:
         print(f"BRANCHNEG: programCounter = currentProgramCounter + 1: {currentProgramCounter + 1}")
         return currentProgramCounter + 1
     
