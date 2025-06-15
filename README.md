@@ -1,4 +1,5 @@
-# Group 3 - Final Project
+ # CS2450 Group 3 - UVSim  
+
 
 **Utah Valley University**  
 **Professor Qudrat E Alahy Ratul**  
@@ -12,6 +13,30 @@
 ---
 
 ### Description ✍️
+
+---
+
+### Dependancies
+- Python 3
+
+### Running UVSim
+- Download and unzip the latest release of UVSim.  
+- Navigate to the UVSim folder from the command line.  
+- Run `python3 UVSim.py`
+
+### UVSim Console Commands
+- READ = 10        Read value from keyoboard into a specific memory location.   
+- WRITE = 11       Write value from a specific memory location to the screen.  
+- LOAD = 20        Load value from a specific memory location to the accumulator.  
+- STORE = 21       Store value from the accumulator to a specific memory location.   
+- ADD = 30         Add value from a specific memory location to the value in the accumulator.  
+- SUBTRACT = 31    Subtract value from a specific memory location from the value in the accumulator.  
+- DIVIDE = 32      Divide the value in the accumulator by the value in a specific memory location.  
+- MULTIPLY = 33    Multiply the value in the accumulator by the value in a specific memory location.  
+- BRANCH = 40      Branch to a specific memory location.  
+- BRANCHNEG = 41   Branch to a specific memory location if the value in the accumulator is negative.  
+- BRANCHZERO = 42  Branch to a specific memory location if the value in the accumulator is zero.  
+- HALT = 43        Stop the program.  
 
 ---
 
