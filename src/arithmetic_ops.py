@@ -16,15 +16,19 @@ Arithmetic Operations (ADD, SUBTRACT, DIVIDE, and MULTIPLY)
 
 
 def ADD(accumulator, memory_value):
+    print(f"ADD: {accumulator} + {memory_value}")
     return accumulator + memory_value
 
 def SUBTRACT(accumulator, memory_value):
+    print(f"SUBTRACT: {accumulator} - {memory_value}")
     return accumulator - memory_value
 
 def DIVIDE(accumulator, memory_value):
     if memory_value == 0:
         raise ZeroDivisionError("Cannot divide by zero.")
+    print(f"DIVIDE: {accumulator} // {memory_value}")
     return accumulator // memory_value
 
 def MULTIPLY(accumulator, memory_value):
+    print(f"MULTIPLY: {accumulator} * {memory_value}")
     return accumulator * memory_value

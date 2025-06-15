@@ -2,6 +2,7 @@ from io_operations import *
 from arithmetic_ops import *
 from control_ops import *
 
+# Returns a list of all of the commands in the file.
 def load_program(filename):
     memory = [0] * 100
     try:
@@ -13,7 +14,7 @@ def load_program(filename):
     except FileNotFoundError:
         print("Error: File not found.")
         exit()
-    return memory
+    return memory 
 
 def run_program(memory):
     accumulator = 0
@@ -45,7 +46,7 @@ def run_program(memory):
         elif opcode == 33:
             accumulator = MULTIPLY(accumulator, memory[operand])
         elif opcode == 40:
-            program_counter = BRANCH(program_counter, operand)
+            program_counter = BRANCH(operand)
             continue
         elif opcode == 41:
             program_counter = BRANCHNEG(program_counter, operand, accumulator)

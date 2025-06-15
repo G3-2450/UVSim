@@ -11,7 +11,9 @@ def WRITE(memory, address):
     print(f"WRITE from memory[{address}]: {memory[address]}")
 
 def LOAD(memory, address, accumulator):
+    print(f"LOAD from memory[{address}]: {memory[address]}")
     return memory[address]
 
 def STORE(memory, address, accumulator):
+    print(f"STORE from accumulator to memory[{address}]: {accumulator}")
     memory[address] = accumulator
