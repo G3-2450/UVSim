@@ -1,0 +1,27 @@
+﻿Name,Description,Use Case,Inputs,Expected Outputs,Reason for Success/Failure
+test_read_valid_input,Reads valid integer input and stores it in memory,READ,"input: '42', address: 7",memory[7] = 42,✔️ User input was a valid input and was stored in the correct memory address
+test_read_invalid_then_valid_input,Handles invalid input before storing valid integer,READ,"input: 'abc', then '15', address: 5",memory[5] = 15,✔️ First input was invalid and correctly prompted for correct input type. Correct integer type was entered and stored in the correct memory address
+test_write_output,Prints correct value from memory,WRITE,memory[3]= 99,output: WRITE from memory[3]: 99,✔️ Memory contained a valid value. Function created the correct message format
+test_write_empty_slot,Prints default value (0) from uninitialized memory,WRITE,memory[4] = 0 (default),output: WRITE from memory[4]: 0,✔️ Memory defaulted to 0 and the function handled and printed it correctly
+test_load_value,Loads a positive value from memory to accumulator,LOAD,memory[2] = 25,accumulator = 25,✔️ The value was correctly returned to simulate loading a value to the accumulator from memory
+test_load_negative,Loads a negative value from memory to accumulator,LOAD,memory[8] = -13,accumulator = -13,✔️ The function correctly returned a negative value from memory
+test_store_positive,Stores a positive accumulator value to memory,STORE,"accumulator = 45, address = 10",memory[10] = 45,✔️ The positive accumulator value was correctly stored to the specified memory address
+test_store_negative,Stores a negative accumulator value to memory,STORE,"accumulator = -17, address = 22",memory[22] = -17,✔️ The negative accumulator value was correctly stored to the specified memory address
+ADD  - Test 1,Adds a value in memory to value in accumulator (positive),ADD,"10, 5",15,✔️ Positive numbers were correctly added and returned to the accumulator
+ADD - Test 2,Adds a value in memory to value in accumulator (negative),ADD,"10, -3",7,✔️ Negative memory value was correctly added to the accumulator
+SUBTRACT - Test 1,Subtracts a value in memory from value in accumulator (positive),SUBTRACT,"10, 5",5,✔️ Subtraction was performed correctly and result returned to accumulator
+SUBTRACT - Test 2,Subtracts a value in memory from value in accumulator (negative),SUBTRACT,"5, 10",-5,✔️ Result of subtraction was negative and function returned correct result
+DIVIDE - Test 1,Divides a value in accumulator from value in memory ,DIVIDE,"10, 5",2,✔️ Division resulted in a valid integer (floor division) and was correctly returned
+DIVIDE - Test 2,Divides a value in accumulator by zero,DIVIDE,"10, 0",ZeroDivisionError,❌ Function correctly raised an exception when attempting to divide by zero
+MULTIPLY - Test 1,Multiplies a value in memory by value in accumulator,MULTIPLY,"10, 5",50,✔️ Multiplication of two positive values was correctly returned
+MULTIPLY - Test 2,Multiplies a value in memory by zero,MULTIPLY,"10, 0",0,✔️ Multiplying by zero correctly resulted in zero
+BRANCH -T1,Positve branch location,BRANCH,5,5,✔️The program counter needs to be positive
+BRANCH  - T2,Negative branch Location,BRANCH,-5,Exception: the nextProgramCounter is less than 0. nextProgramCounter = -5,❌ The program counter cannot be negative
+BRANCHNEG  - T1,non-negative accumulator,BRANCHNEG,"1, 12, 0",2,✔️ accumulator is non-negative
+BRANCHNEG  - T2,negative accumulator,BRANCHNEG,"2, 15, -5",15,✔️accumulator is negative
+BRANCHNEG  - T3,negative accumulator & negative nextProgramCounter,BRANCHNEG,"2, -1, -5",Exception: the nextProgramCounter is less than 0. nextProgramCounter = -1,❌ The program counter cannot be negative
+BRANCHZERO - T1,Zero accumulator,BRANCHZERO,"1, 12, 0",12,✔️ accumulator is zero
+BRANCHZERO - T2,non-zero accumulator,BRANCHZERO,"2, 15, 5",3,✔️accumulator is non-zero
+BRANCHZERO - T3,Zero accumulator & negative nextProgramCount,BRANCHZERO,"2, -1, 0",Exception: the nextProgramCounter is less than 0. nextProgramCounter = -1,❌ The program counter cannot be negative
+HALT - T1,no input,HALT,,PROGRAM HALTED,✔️ 
+HALT - T2,with input,HALT,5,Some sort of error,❌ cannot pass things to the halt function
