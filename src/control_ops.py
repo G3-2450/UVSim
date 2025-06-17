@@ -7,7 +7,7 @@
 
 def BRANCH(nextProgramCounter):
     if (nextProgramCounter < 0):
-        raise Exception("the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
+        raise Exception(f"the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
     
     print(f"BRANCH: programCounter = nextProgramCounter: {nextProgramCounter}")
     return nextProgramCounter
@@ -19,7 +19,7 @@ def BRANCHNEG(currentProgramCounter, nextProgramCounter, accumulator):
         return currentProgramCounter + 1
     
     if (nextProgramCounter < 0):
-        raise Exception("the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
+        raise Exception(f"the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
 
     print(f"BRANCHNEG: programCounter = nextProgramCounter: {nextProgramCounter}")
     return nextProgramCounter
@@ -31,7 +31,7 @@ def BRANCHZERO(currentProgramCounter, nextProgramCounter, accumulator):
         return currentProgramCounter + 1
    
     if (nextProgramCounter < 0):
-        raise Exception("the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
+        raise Exception(f"the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
 
     print(f"BRANCHZERO: programCounter = nextProgramCounter: {nextProgramCounter}")
     return nextProgramCounter
