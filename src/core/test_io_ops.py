@@ -1,18 +1,18 @@
-from io_operations import READ, WRITE, LOAD, STORE
+from BasicMLOps import BasicMLOps
 from unittest.mock import patch
 
 # --- READ Tests ---
 def test_read_valid_input():
     memory = [0] * 100
     with patch('builtins.input', return_value='42'):
-        READ(memory, 7)
+        BasicMLOps.read(memory, 7)
     if memory[7] != 42:
         raise Exception("READ valid input failed")
 
 def test_read_invalid_then_valid_input():
     memory = [0] * 100
     with patch('builtins.input', side_effect=['abc', '15']):
-        READ(memory, 5)
+        BasicMLOps.read(memory, 5)
     if memory[5] != 15:
         raise Exception("READ invalid then valid input failed")
 
@@ -21,14 +21,14 @@ def test_write_output():
     memory = [0] * 100
     memory[3] = 99
     with patch('builtins.print') as mock_print:
-        WRITE(memory, 3)
+        BasicMLOps.write(memory, 3)
         if mock_print.call_args[0][0] != "WRITE from memory[3]: 99":
             raise Exception("WRITE output failed")
 
 def test_write_empty_slot():
     memory = [0] * 100
     with patch('builtins.print') as mock_print:
-        WRITE(memory, 4)
+        BasicMLOps.write(memory, 4)
         if mock_print.call_args[0][0] != "WRITE from memory[4]: 0":
             raise Exception("WRITE empty slot failed")
 
@@ -36,14 +36,14 @@ def test_write_empty_slot():
 def test_load_value():
     memory = [0] * 100
     memory[2] = 25
-    result = LOAD(memory, 2, 0)
+    result = BasicMLOps.load(memory, 2, 0)
     if result != 25:
         raise Exception("LOAD value failed")
 
 def test_load_negative():
     memory = [0] * 100
     memory[8] = -13
-    result = LOAD(memory, 8, 0)
+    result = BasicMLOps.load(memory, 8, 0)
     if result != -13:
         raise Exception("LOAD negative value failed")
 
@@ -51,14 +51,14 @@ def test_load_negative():
 def test_store_positive():
     memory = [0] * 100
     accumulator = 45
-    STORE(memory, 10, accumulator)
+    BasicMLOps.store(memory, 10, accumulator)
     if memory[10] != 45:
         raise Exception("STORE positive value failed")
 
 def test_store_negative():
     memory = [0] * 100
     accumulator = -17
-    STORE(memory, 22, accumulator)
+    BasicMLOps.store(memory, 22, accumulator)
     if memory[22] != -17:
         raise Exception("STORE negative value failed")
 

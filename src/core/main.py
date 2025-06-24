@@ -1,6 +1,4 @@
-from io_ops import *
-from arithmetic_ops import *
-from control_ops import *
+from BasicMLOps import BasicMLOps
 
 # Returns a list of all of the commands in the file.
 def load_program(filename):
@@ -26,36 +24,36 @@ def run_program(memory):
         operand = abs(instruction) % 100    # last two digits
 
         if opcode == 10:
-            READ(memory, operand)
+            BasicMLOps.read(memory, operand)
         elif opcode == 11:
-            WRITE(memory, operand)
+            BasicMLOps.write(memory, operand)
         elif opcode == 20:
-            accumulator = LOAD(memory, operand, accumulator)
+            accumulator = BasicMLOps.load(memory, operand, accumulator)
         elif opcode == 21:
-            STORE(memory, operand, accumulator)
+            BasicMLOps.store(memory, operand, accumulator)
         elif opcode == 30:
-            accumulator = ADD(accumulator, memory[operand])
+            accumulator = BasicMLOps.add(accumulator, memory[operand])
         elif opcode == 31:
-            accumulator = SUBTRACT(accumulator, memory[operand])
+            accumulator = BasicMLOps.subtract(accumulator, memory[operand])
         elif opcode == 32:
             try:
-                accumulator = DIVIDE(accumulator, memory[operand])
+                accumulator = BasicMLOps.divide(accumulator, memory[operand])
             except ZeroDivisionError as e:
                 print(e)
                 break
         elif opcode == 33:
-            accumulator = MULTIPLY(accumulator, memory[operand])
+            accumulator = BasicMLOps.multiply(accumulator, memory[operand])
         elif opcode == 40:
-            program_counter = BRANCH(operand)
+            program_counter = BasicMLOps.branch(operand)
             continue
         elif opcode == 41:
-            program_counter = BRANCHNEG(program_counter, operand, accumulator)
+            program_counter = BasicMLOps.branch_neg(program_counter, operand, accumulator)
             continue
         elif opcode == 42:
-            program_counter = BRANCHZERO(program_counter, operand, accumulator)
+            program_counter = BasicMLOps.branch_zero(program_counter, operand, accumulator)
             continue
         elif opcode == 43:
-            HALT()
+            BasicMLOps.halt()
             break
         else:
             print(f"Unknown instruction: {instruction}")

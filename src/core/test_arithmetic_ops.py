@@ -15,37 +15,37 @@ Unit Tests - Arithmetic Operations (ADD, SUBTRACT, DIVIDE, and MULTIPLY)
 #    memory to the word in the accumulator (leave the result in the accumulator).
 
 import unittest
-from arithmetic_ops import ADD, SUBTRACT, DIVIDE, MULTIPLY 
+from BasicMLOps import BasicMLOps
 
 class TestArithmeticOps(unittest.TestCase):
     #ADD Tests
     def test_add_positive_nums(self):
-        self.assertEqual(ADD(10, 5), 15)
+        self.assertEqual(BasicMLOps.add(10, 5), 15)
 
     def test_add_negative_nums(self):
-        self.assertEqual(ADD(10, -3), 7)
+        self.assertEqual(BasicMLOps.add(10, -3), 7)
 
     #SUBTRACT Tests
     def test_subtract_positive_nums(self):
-        self.assertEqual(SUBTRACT(10, 5), 5)
+        self.assertEqual(BasicMLOps.subtract(10, 5), 5)
 
     def test_subtract_negative_nums(self):
-        self.assertEqual(SUBTRACT(5, 10), -5)
+        self.assertEqual(BasicMLOps.subtract(5, 10), -5)
 
     #DIVIDE Tests
     def test_divide_positive_nums(self):
-        self.assertEqual(DIVIDE(10, 5), 2)
+        self.assertEqual(BasicMLOps.divide(10, 5), 2)
 
     def test_divide_by_zero_nums(self):
         with self.assertRaises(ZeroDivisionError):
-            DIVIDE(10, 0)
+            BasicMLOps.divide(10, 0)
 
     #MULTIPLY Tests
     def test_mulitply_positive_nums(self):
-        self.assertEqual(MULTIPLY(10, 5), 50)
+        self.assertEqual(BasicMLOps.multiply(10, 5), 50)
 
     def test_mulitply_by_zero_nums(self):
-        self.assertEqual(MULTIPLY(10, 0), 0)
+        self.assertEqual(BasicMLOps.multiply(10, 0), 0)
 
 if __name__ == '__main__':
     unittest.main()
