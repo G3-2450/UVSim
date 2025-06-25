@@ -1,24 +1,24 @@
 ### Meeting Report 4
 
-**Date:** June 23th, 2025
+**Date:** June 25th, 2025
 **Scrum Master:** Timothy Faupusa
 **Scribe:** Nathaniel Wilson
 **Attendees:**
 
 - Nathaniel Wilson
 - Taylor Oldham
-- Timothy Faupusa
 
 #### Agenda
-1. Discuss second half of milestone 3
+1. Discuss progress towards milestone 3
 
 #### Discussion
-- UI changes, swapped Console and Memory sections
-- Due dates
+- The frontend files are in place and ready for code
+- The backend is now a single class
+- The backend functions still have some side effects
 
 #### Action Items:
 **Taylor:** Doc strings, Registers & Memory frontend
-**Nate:**  Make the code more object oriented, SRS, learn Kivy, Console section of frontend
+**Nate:**  Learn Kivy, Console section of frontend
 **Tim:** Left side of the frontend
 
 
