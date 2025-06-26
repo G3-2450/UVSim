@@ -1,23 +1,13 @@
 
 
 <ConsoleWidget>
-    size_hint_x: 1
-    size_hint_y: 1
     orientation: 'vertical'
     spacing: dp(12)
-    padding: dp(12)
 
-    canvas.before:
-        Color:
-            rgba: .1608, .1608, .1608, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    
     Label:
         canvas.before:
             Color:
-                rgba: .6509, .6509, .6509, 1
+                rgba: .6509, .6509, .6509, 1 # Label color
             Rectangle:
                 pos: self.pos
                 size: self.size

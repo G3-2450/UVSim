@@ -37,7 +37,15 @@
         orientation: 'horizontal'
         size_hint_x: 2/3
         size_hint_y: 1
-        spacing: dp(10) # Space between Console and Reg/Mem sections
+        spacing: dp(12) # Space between Console and Reg/Mem sections
+        padding: dp(12)
+        
+        canvas.before:
+            Color:
+                rgba: .1608, .1608, .1608, 1 # Background color
+            Rectangle:
+                pos: self.pos
+                size: self.size
         
         # REGISTERS AND MEMORY
         MemRegWidget:
