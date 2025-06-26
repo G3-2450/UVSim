@@ -11,14 +11,20 @@
     
 
 <UVSimWindow>:
+    size_hint_x: 1
+    size_hint_y: 1
+
     BoxLayout:
         orientation: 'horizontal' # Two panes side-by-side
         spacing: dp(10) # Space between panes
         padding: dp(10) # Padding around window content
+        size_hint_x: 1
+        size_hint_y: 1
 
         # LEFT PANE
         BoxLayout:
-            size_hint_x: 0.3
+            size_hint_x: 1/3
+            size_hint_y: 1
             orientation: 'vertical'
             LeftPaneWidget:
                 id: left_panel
@@ -26,15 +32,18 @@
         # RIGHT PANE
         BoxLayout:
             orientation: 'horizontal'
-            size_hint_x: 0.7
+            size_hint_x: 2/3
+            size_hint_y: 1
             spacing: dp(10) # Space between Console and Reg/Mem sections
             
             # REGISTERS AND MEMORY
             MemRegWidget:
                 id: mem_reg_display
                 size_hint_x: 0.5
+                size_hint_y: 1
 
             # CONSOLE SECTION
             ConsoleWidget:
                 id: uvsim_console
                 size_hint_x: 0.5
+                size_hint_y: 1

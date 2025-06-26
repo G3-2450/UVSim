@@ -7,8 +7,11 @@ from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.uix.widget import Widget
+from kivy.lang import Builder
 
-
+Builder.load_file('ConsoleWidget.kv')
+Builder.load_file('LeftPaneWidget.kv')
+Builder.load_file('MemRegWidget.kv')
 
 class LeftPaneWidget(BoxLayout):
     pass
@@ -19,7 +22,7 @@ class MemRegWidget(BoxLayout):
 class ConsoleWidget(BoxLayout):
     pass
 
-class UVSimWindow(Widget):
+class UVSimWindow(BoxLayout):
     pass
 
 class UVSimApp(App):
