@@ -11,39 +11,42 @@
     
 
 <UVSimWindow>:
+    orientation: 'horizontal' # Two panes side-by-side
+    spacing: dp(12) # Space between panes
+    padding: dp(12) # Padding around window content
     size_hint_x: 1
     size_hint_y: 1
 
+    canvas.before:
+        Color:
+            rgba: .8, .8, .8, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    # LEFT PANE
     BoxLayout:
-        orientation: 'horizontal' # Two panes side-by-side
-        spacing: dp(10) # Space between panes
-        padding: dp(10) # Padding around window content
-        size_hint_x: 1
+        size_hint_x: 1/3
         size_hint_y: 1
-
-        # LEFT PANE
-        BoxLayout:
-            size_hint_x: 1/3
-            size_hint_y: 1
-            orientation: 'vertical'
-            LeftPaneWidget:
-                id: left_panel
+        orientation: 'vertical'
+        LeftPaneWidget:
+            id: left_panel
+    
+    # RIGHT PANE
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_x: 2/3
+        size_hint_y: 1
+        spacing: dp(10) # Space between Console and Reg/Mem sections
         
-        # RIGHT PANE
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint_x: 2/3
+        # REGISTERS AND MEMORY
+        MemRegWidget:
+            id: mem_reg_display
+            size_hint_x: 0.5
             size_hint_y: 1
-            spacing: dp(10) # Space between Console and Reg/Mem sections
-            
-            # REGISTERS AND MEMORY
-            MemRegWidget:
-                id: mem_reg_display
-                size_hint_x: 0.5
-                size_hint_y: 1
 
-            # CONSOLE SECTION
-            ConsoleWidget:
-                id: uvsim_console
-                size_hint_x: 0.5
-                size_hint_y: 1
+        # CONSOLE SECTION
+        ConsoleWidget:
+            id: uvsim_console
+            size_hint_x: 0.5
+            size_hint_y: 1

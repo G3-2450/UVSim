@@ -1,13 +1,33 @@
 
 
 <ConsoleWidget>
+    size_hint_x: 1
+    size_hint_y: 1
+    orientation: 'vertical'
+    spacing: dp(12)
+    padding: dp(12)
+
     canvas.before:
         Color:
-            rgba: 0.2, 0.2, 0.8, 1
+            rgba: .1608, .1608, .1608, 1
         Rectangle:
             pos: self.pos
             size: self.size
+    
+    Label:
+        canvas.before:
+            Color:
+                rgba: .6509, .6509, .6509, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        text: 'Console'
+        font_size: '18sp'
+        color: 1, 1, 1, 1 # white text
+        size_hint_y: None
+        height: self.texture_size[1] + dp(20)
 
     Button:
         text: 'Button 1'
         size_hint: 1, 1
+        background_color: 0, 0, 0, 1
