@@ -27,12 +27,13 @@ class BasicMLOps:
 
     @staticmethod
     def read(memory, address):
-        try:
-            value = int(input(f"READ to memory[{address}]: "))
-            memory[address] = value
-        except ValueError:
-            print("Invalid input. Please enter an integer.")
-            BasicMLOps.read(memory, address)
+        while True:
+            try:
+                value = int(input(f"READ to memory [{address}]: "))
+                memory[address] = value
+                break
+            except ValueError:
+                print ("Invalid input. Please enter an integer.")
 
     @staticmethod
     def write(memory, address):
