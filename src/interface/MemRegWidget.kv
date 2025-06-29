@@ -1,7 +1,100 @@
+<MemRegWidget>:
+    orientation: 'vertical'
+    spacing: dp(12)
+    #padding: dp(12)
 
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
-<MemRegWidget>
-    Button:
-        text: 'Button 1'
-        size_hint: 1, 1
-        background_color: 0, 0, 0, 1
+    # Registers
+    Label:
+        canvas.before:
+            Color:
+                rgba: .6509, .6509, .6509, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        text: 'Registers'
+        font_size: '18sp'
+        color: 1, 1, 1, 1 # whtie text
+        size_hint_y: None
+        height: self.texture_size[1] + dp(20)
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: dp(60)
+        spacing: dp(20)
+
+        # Accumulator
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: .5
+            Label:
+                text: 'Accumulator'
+                font_size: '14sp'
+                color: 1, 1, 1, 1
+                size_hint_y: None
+                height: dp(20)
+            TextInput:
+                id: accumulator
+                text: '0000'
+                readonly: True
+                multiline: False
+                halign: 'center'
+                font_size: '16sp'
+                background_color: 0, 0, 0, 1
+                foreground_color: 1, 1, 1, 1
+
+        # Program Counter
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: .5
+            Label:
+                text: 'Program Counter'
+                font_size: '14sp'
+                color: 1, 1, 1, 1
+                size_hint_y: None
+                height: dp(20)
+            TextInput:
+                id: program_counter
+                text: '00'
+                readonly: True
+                multiline: False
+                halign: 'center'
+                font_size: '16sp'
+                background_color: 0, 0, 0, 1
+                foreground_color: 1, 1, 1, 1
+
+    # Memory Locations
+    Label:
+        canvas.before:
+            Color:
+                rgba: .6509, .6509, .6509, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        text: 'Memory (00 - 99)'
+        font_size: '18sp'
+        color: 1, 1, 1, 1  # white text
+        size_hint_y: None
+        height: self.texture_size[1] + dp(20)
+
+    ScrollView:
+        bar_width: dp(10)
+        do_scroll_x: False
+
+        BoxLayout:
+            id: memory_box
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: dp(8)
+            padding: dp(8)
+
+            # Sample Memory slots in main
+
