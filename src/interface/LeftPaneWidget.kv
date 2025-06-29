@@ -1,7 +1,62 @@
+<LeftPaneWidget>:
+    orientation: 'vertical'
+    padding: 50
+    spacing: 20
+
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1  # black or near-black
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        text: 'UVSim'
+        font_size: '40sp'
+        size_hint: 1, 0.3
+        halign: 'center'
+        valign: 'center'
+        text_size: self.size
+
+    Label:
+        text: 
+            """1. Prepare a .txt file with BasicML instructions.
+            2. Click the 'Upload .txt file' button to load your program.
+            3. After uploading, click:
+            • 'Run' to execute the full program at once
+            • 'Step' to execute one instruction at a time
+            • 'Start Over' to reset the program and reload a new file
+            4. Watch the output in the right panel or console.
+            5. Follow any prompts for input if the program uses READ."""
+
+        size_hint: 1, 0.4
+        text_size: self.size
+        halign: 'left'
+        valign: 'top'
 
 
-<LeftPaneWidget>
-    Button:
-        text: 'Button 1'
-        size_hint: 1, 1
-        background_color: 0, 0, 0, 1
+    BoxLayout:
+        size_hint: 1, 0.1
+        spacing: 20
+
+    BoxLayout:
+        Button:
+            text: 'Upload .txt file'
+            size_hint: 1, 0.1
+
+    BoxLayout:
+        size_hint: 1, 0.1
+        padding: [0, 0]
+        spacing: 20
+
+        Button:
+            text: 'Run'
+            size_hint: 1, 1
+
+        Button:
+            text: 'Step'
+            size_hint: 1, 1
+
+        Button:
+            text: 'Start Over'
+            size_hint: 1, 1
