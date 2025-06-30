@@ -19,6 +19,13 @@
 ### Dependancies
 - Python 3
 
+### Runing UVSim GUI
+- In the console, navigate to /src/interface
+- Run `python3 .\main.py
+- This will run the UVSim GUI.
+- Functionality will be added to the GUI in the 4th Milestone
+
+
 ### Running UVSim
 - Download and unzip the latest release of UVSim.  
 - Navigate to the UVSim folder from the command line.  
