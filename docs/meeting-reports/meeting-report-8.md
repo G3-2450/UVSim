@@ -24,6 +24,8 @@
 **Nate:**  Update readme
 **Tim:** 
 
+#### Reminders:
+- Add functionality to the GUI
 
 ### Important Deadlines:
 June 30th: Milestone 3
