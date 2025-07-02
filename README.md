@@ -77,7 +77,7 @@
 - **Scribe:** Nathaniel
 
 ##### Milestone 4:
-- **Deadline:** June 30th, 2025
+- **Deadline:** July 14th, 2025
 - **Scrum Master:** Nathaniel
 - **Scribe:** Taylor
 
