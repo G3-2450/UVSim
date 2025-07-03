@@ -5,19 +5,27 @@
 **Professor Qudrat E Alahy Ratul**  
 **Class:** Computer Science 2450 - Software Engineering I  
 
-### Team Members 👨‍💻
+### Team Members  
 
 - Taylor Oldham
 - Nathaniel Wilson
 - Timothy Faupusa  
 ---
 
-### Description ✍️
+### Description  
 
 ---
 
 ### Dependancies
 - Python 3
+- Kivy
+
+### Runing UVSim GUI
+- In the console, navigate to /src/interface
+- Run `python3 .\main.py
+- This will run the UVSim GUI.
+- Functionality will be added to the GUI in the 4th Milestone
+
 
 ### Running UVSim
 - Download and unzip the latest release of UVSim.  
@@ -44,7 +52,7 @@
 
 ---
 
-### Technology Used 💻   
+### Technology Used  
 - **Front End:** Python GUI  
 - **Back End:** Python   
 - **Dataase:**  
@@ -56,31 +64,39 @@
 
 ---
 
-### Project Timeline (Sprints & Scrum Master Schedule) 📆 🏃‍♂️
+### Project Timeline (Sprints & Scrum Master Schedule)  
 
-##### Sprint 1:
+##### Milestone 2:
+- **Deadline:** June 16th, 2025
+- **Scrum Master:** Taylor
+- **Scribe:** Tim
 
-- **Time Frame:** June 2-16, 2025
-- **Scrum Master:** Taylor Oldham
+##### Milestone 3:
+- **Deadline:** June 30th, 2025
+- **Scrum Master:** Tim
+- **Scribe:** Nathaniel
 
-##### Sprint 2:
-- **Time Frame:** 
-- **Scrum Master:**
+##### Milestone 4:
+- **Deadline:** July 14th, 2025
+- **Scrum Master:** Nathaniel
+- **Scribe:** Taylor
 
-##### Sprint 3:
-- **Time Frame:** 
-- **Scrum Master:**
 
-##### Sprint 4:
-- **Time Frame:** 
-- **Scrum Master:**
+##### Milestone 5:
+- **Deadline:** 
+- **Scrum Master:** Taylor
+- **Scribe:** Tim
+
+##### Milestone 6:
+- **Deadline:** 
+- **Scrum Master:** Tim
+- **Scribe:** Nathaniel
+
+##### Milestone 7:
+- **Deadline:** 
+- **Scrum Master:** Nathaniel
+- **Scribe:** Taylor
 ---
-
-### Contact ☎️ 📧
-
-**If you have questions, contact us at:**
-- (Emails/ Phone #'s)
-- Or open an issue on Github
 
 **Zenhub (integrated into Github):**
 https://shorturl.at/1RH8Z
