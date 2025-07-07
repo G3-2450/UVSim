@@ -52,10 +52,10 @@
         height: dp(40)
         TextInput:
             id: console_input
-            hint_text: 'Enter command...'
             multiline: False
             on_text_validate: root.execute_command(self.text)
             disabled: True
+            hint_text: 'Running program...'
 
             # typed text color
             color: 1, 1, 1, 1

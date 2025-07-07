@@ -60,8 +60,16 @@ class MemRegWidget(BoxLayout):
             memory_box.add_widget(row)
 
 class ConsoleWidget(BoxLayout):
+    # Call get_input with a callback function that takes the data the user enters as the input
+    # Example:
+    # 
+    # def isEven(self, number):
+    #     self.console.get_input(
+    #         prompt_text="Give me a number: ",
+    #         InputFunction = self.isEven
+    #     )
+
     CallbackFunction = ObjectProperty(None)
-    current_prompt = StringProperty("")
 
     def execute_command(self, command_text):
         print(f"Command recieved: {command_text}")
