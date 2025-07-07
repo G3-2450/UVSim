@@ -8,6 +8,7 @@ from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
+from kivy.properties import StringProperty, ObjectProperty
 
 Builder.load_file('ConsoleWidget.kv')
 Builder.load_file('LeftPaneWidget.kv')
@@ -59,7 +60,36 @@ class MemRegWidget(BoxLayout):
             memory_box.add_widget(row)
 
 class ConsoleWidget(BoxLayout):
-    pass
+    CallbackFunction = ObjectProperty(None)
+    current_prompt = StringProperty("")
+
+    def execute_command(self, command_text):
+        print(f"Command recieved: {command_text}")
+        self.ids.console_input.text = ""
+
+        if self.CallbackFunction:
+            callback_function = self.CallbackFunction
+            self.CallbackFunction = None
+            self.disable_input()
+            callback_function(command_text)
+        else:
+            raise Exception("no inputcallback")
+    
+    def disable_input(self):
+        self.ids.console_input.disabled = True
+        self.ids.console_input.hint_text = "Running program..."
+        print(f"input is disabled")
+
+    def get_input(self, promptText="Enter value: ", InputFunction = None):
+        if InputFunction == None:
+            print("WARNING: get_input called with no callback function")
+            return
+        
+        self.CallbackFunction = InputFunction
+        self.ids.console_input.hint_text = promptText
+        self.ids.console_input.disabled = False
+        self.ids.console_input.focus = True
+        print(f"input is enabled")
 
 class UVSimWindow(BoxLayout):
     pass

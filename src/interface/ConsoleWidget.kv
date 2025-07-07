@@ -21,6 +21,7 @@
         id: console_scroll_view
         size_hint_y: 1
         bar_width: dp(10)
+        do_scroll_x: False
 
         FloatLayout:
             id: console_float_layout
@@ -54,6 +55,7 @@
             hint_text: 'Enter command...'
             multiline: False
             on_text_validate: root.execute_command(self.text)
+            disabled: True
 
             # typed text color
             color: 1, 1, 1, 1
