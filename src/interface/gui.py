@@ -9,6 +9,7 @@ from kivy.metrics import dp
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
+from kivy.clock import Clock
 
 Builder.load_file('ConsoleWidget.kv')
 Builder.load_file('LeftPaneWidget.kv')
@@ -69,17 +70,24 @@ class ConsoleWidget(BoxLayout):
     #         InputFunction = self.isEven
     #     )
 
-    CallbackFunction = ObjectProperty(None)
+    # To add a message to the console ouput, call add_message("a string you want printed")
 
-    def execute_command(self, command_text):
-        print(f"Command recieved: {command_text}")
+
+    CallbackFunction = ObjectProperty(None)
+    _current_prompt = StringProperty("")
+
+    def execute_command(self, input):
+        print(f"Command recieved: {input}")
         self.ids.console_input.text = ""
 
         if self.CallbackFunction:
             callback_function = self.CallbackFunction
             self.CallbackFunction = None
             self.disable_input()
-            callback_function(command_text)
+            
+            self.add_message(self._current_prompt + str(input))
+            self._current_prompt = None
+            callback_function(input)
         else:
             raise Exception("no inputcallback")
     
@@ -87,6 +95,20 @@ class ConsoleWidget(BoxLayout):
         self.ids.console_input.disabled = True
         self.ids.console_input.hint_text = "Running program..."
         print(f"input is disabled")
+
+    def add_message(self, text=None):
+        if text == None:
+            return
+
+        currentText = self.ids.console_output.text
+
+        if currentText.strip():
+            newText = currentText + "\n" + str(text)
+        else:
+            newText = str(text)
+        
+        self.ids.console_output.text = newText
+        Clock.schedule_once(self._scroll_to_bottom, 0.1)
 
     def get_input(self, promptText="Enter value: ", InputFunction = None):
         if InputFunction == None:
