@@ -16,7 +16,56 @@ Builder.load_file('LeftPaneWidget.kv')
 Builder.load_file('MemRegWidget.kv')
 
 class LeftPaneWidget(BoxLayout):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def upload_file(self):
+        file_chooser = FileChooserListView(filters=['*.txt'], size_hint_y=0.9)
+        btn_next = Button(text='Next', size_hint_y=0.1)
+
+        layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        layout.add_widget(file_chooser)
+        layout.add_widget(btn_next)
+
+        self.file_popup = Popup(title='Select BasicML File',
+                                content=layout,
+                                size_hint=(0.9, 0.9),
+                                auto_dismiss=False)
+
+        def open_editor(instance):
+            if not file_chooser.selection:
+                return
+            file_path = file_chooser.selection[0]
+            self.file_popup.dismiss()
+            self.open_editor_popup(file_path)
+
+        btn_next.bind(on_release=open_editor)
+        self.file_popup.open()
+
+    def open_editor_popup(self, file_path):
+        with open(file_path, 'r') as f:
+            content = f.read()
+
+        self.editor_input = TextInput(text=content, multiline=True, size_hint_y=0.9)
+        btn_save = Button(text='Save', size_hint_y=0.1)
+
+        layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        layout.add_widget(self.editor_input)
+        layout.add_widget(btn_save)
+
+        self.editor_popup = Popup(title='Edit & Save File',
+                                  content=layout,
+                                  size_hint=(0.9, 0.9),
+                                  auto_dismiss=False)
+
+        def save_to_user_program(_):
+            with open("user_program.txt", "w") as out:
+                out.write(self.editor_input.text)
+            self.editor_popup.dismiss()
+
+        btn_save.bind(on_release=save_to_user_program)
+        self.editor_popup.open()
+
 
 class MemRegWidget(BoxLayout):
     # Sample 100 memory slots to test scrollability 
