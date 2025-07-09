@@ -5,7 +5,7 @@
 
     canvas.before:
         Color:
-            rgba: 0, 0, 0, 1  # black or near-black
+            rgba: 0, 0, 0, 1
         Rectangle:
             pos: self.pos
             size: self.size
@@ -19,44 +19,35 @@
         text_size: self.size
 
     Label:
-        text: 
+        text:
             """1. Prepare a .txt file with BasicML instructions.
-            2. Click the 'Upload .txt file' button to load your program.
-            3. After uploading, click:
-            • 'Run' to execute the full program at once
-            • 'Step' to execute one instruction at a time
-            • 'Start Over' to reset the program and reload a new file
-            4. Watch the output in the right panel or console.
-            5. Follow any prompts for input if the program uses READ."""
-
+            2. Click the 'Upload .txt file' button to load and edit your program.
+            3. File will be saved as user_program.txt after edits.
+            4. You can then use Run/Step to execute the file."""
         size_hint: 1, 0.4
         text_size: self.size
         halign: 'left'
         valign: 'top'
 
-
+    # Upload button
     BoxLayout:
         size_hint: 1, 0.1
-        spacing: 20
-
-    BoxLayout:
         Button:
+            id: upload_btn
             text: 'Upload .txt file'
-            size_hint: 1, 0.1
+            size_hint_x: 1
+            on_release: root.upload_file()
 
+    # Run / Step buttons
     BoxLayout:
         size_hint: 1, 0.1
-        padding: [0, 0]
         spacing: 20
-
         Button:
+            id: run_btn
             text: 'Run'
-            size_hint: 1, 1
+            size_hint_x: 0.5
 
         Button:
+            id: step_btn
             text: 'Step'
-            size_hint: 1, 1
-
-        Button:
-            text: 'Start Over'
-            size_hint: 1, 1
+            size_hint_x: 0.5
