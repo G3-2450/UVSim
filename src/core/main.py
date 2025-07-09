@@ -1,4 +1,4 @@
-from BasicMLOps import BasicMLOps
+from core.BasicMLOps import BasicMLOps
 
 # Returns a list of all of the commands in the file.
 def load_program(filename):

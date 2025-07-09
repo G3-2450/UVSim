@@ -16,6 +16,7 @@ from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.filechooser import FileChooserListView
+from core.main import load_program, run_program
 
 
 from core.BasicMLOps import BasicMLOps
@@ -82,6 +83,27 @@ class LeftPaneWidget(BoxLayout):
 
         btn_save.bind(on_release=save_to_user_program)
         self.editor_popup.open()
+
+    def run_button(self):
+        app = App.get_running_app()
+        root = app.root
+
+        file_path = "user_program.txt"
+        if not os.path.exists(file_path):
+            root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
+            return
+        
+        memory = load_program(file_path)
+
+        memory_box = root.ids.mem_reg_display.ids.memory_box
+        for i in range(100):
+            mem_row = memory_box.children[99 - i] #reverse stacked
+            text_input = mem_row.children[0]
+            text_input.text = f"{memory[i]:05d}"
+
+        run_program(memory)
+
+        root.ids.uvsim_console.add_message("Program execution finished")
 
 
 class MemRegWidget(BoxLayout):
@@ -175,6 +197,11 @@ class ConsoleWidget(BoxLayout):
         
         self.ids.console_output.text = newText
         Clock.schedule_once(self._scroll_to_bottom, 0.1)
+
+    #added scroll to bottom funcion - console scolls to latest output
+    def _scroll_to_bottom(self, *args):
+        scroll_view = self.ids.console_scroll_view
+        scroll_view.scroll_y = 0
 
     def get_input(self, promptText="Enter value: ", InputFunction = None):
         if InputFunction == None:
