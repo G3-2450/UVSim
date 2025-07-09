@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -10,6 +13,12 @@ from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.clock import Clock
+from kivy.uix.popup import Popup
+from kivy.uix.button import Button
+from kivy.uix.filechooser import FileChooserListView
+
+
+from core.BasicMLOps import BasicMLOps
 
 Builder.load_file('ConsoleWidget.kv')
 Builder.load_file('LeftPaneWidget.kv')
@@ -19,7 +28,9 @@ class LeftPaneWidget(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def upload_file(self):
+    def upload_file(self): 
+        # Opens a popup with the FileChooserListView window allowing the user to choose a .txt file. 
+        # Once a file is selected, the Next button is clicked, passing the file to the editor popup.
         file_chooser = FileChooserListView(filters=['*.txt'], size_hint_y=0.9)
         btn_next = Button(text='Next', size_hint_y=0.1)
 
@@ -33,6 +44,7 @@ class LeftPaneWidget(BoxLayout):
                                 auto_dismiss=False)
 
         def open_editor(instance):
+        # Handles transition of the .txt file from the file chooser popup to the editor popup.
             if not file_chooser.selection:
                 return
             file_path = file_chooser.selection[0]
@@ -43,6 +55,10 @@ class LeftPaneWidget(BoxLayout):
         self.file_popup.open()
 
     def open_editor_popup(self, file_path):
+        #Opens the editor popup where the user can choose to edit the contents of the selected .txt file.
+        #Once Save button is clicked, the file is saved as 'user_program.txt".
+        #Args: file_path(str) : this argument is a string the represents the file path to the selected .txt file.
+        
         with open(file_path, 'r') as f:
             content = f.read()
 
@@ -59,6 +75,7 @@ class LeftPaneWidget(BoxLayout):
                                   auto_dismiss=False)
 
         def save_to_user_program(_):
+            # saves the .txt file after edits as 'user_program.txt' and then closes the editor popup
             with open("user_program.txt", "w") as out:
                 out.write(self.editor_input.text)
             self.editor_popup.dismiss()
