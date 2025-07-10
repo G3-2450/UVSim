@@ -116,7 +116,7 @@ class LeftPaneWidget(BoxLayout):
         
         memory = load_program(file_path)
 
-        self.populate_memory(self, root, memory)
+        self.populate_memory(root, memory)
 
         run_program(memory)
 
