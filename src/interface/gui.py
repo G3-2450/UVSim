@@ -79,10 +79,31 @@ class LeftPaneWidget(BoxLayout):
             # saves the .txt file after edits as 'user_program.txt' and then closes the editor popup
             with open("user_program.txt", "w") as out:
                 out.write(self.editor_input.text)
+
+            app = App.get_running_app()
+            root = app.root
+
+            file_path = "user_program.txt"
+            if not os.path.exists(file_path):
+                root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
+                return
+        
+            memory = load_program(file_path)
+
+            app = App.get_running_app()
+            root = app.root
+            self.populate_memory(root, memory)
             self.editor_popup.dismiss()
 
         btn_save.bind(on_release=save_to_user_program)
         self.editor_popup.open()
+
+    def populate_memory(self, root, memory):
+        memory_box = root.ids.mem_reg_display.ids.memory_box
+        for i in range(100):
+            mem_row = memory_box.children[99 - i] #reverse stacked
+            text_input = mem_row.children[0]
+            text_input.text = f"{memory[i]:05d}"
 
     def run_button(self):
         app = App.get_running_app()
@@ -95,11 +116,7 @@ class LeftPaneWidget(BoxLayout):
         
         memory = load_program(file_path)
 
-        memory_box = root.ids.mem_reg_display.ids.memory_box
-        for i in range(100):
-            mem_row = memory_box.children[99 - i] #reverse stacked
-            text_input = mem_row.children[0]
-            text_input.text = f"{memory[i]:05d}"
+        self.populate_memory(self, root, memory)
 
         run_program(memory)
 
