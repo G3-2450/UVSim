@@ -1,5 +1,6 @@
 import sys
 import os
+from WriteToGuiConsole import WriteToGuiConsole
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -16,7 +17,7 @@ from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.filechooser import FileChooserListView
-from core.main import load_program, run_program
+from core.main import UVSimCore
 
 
 from core.BasicMLOps import BasicMLOps
@@ -87,11 +88,11 @@ class LeftPaneWidget(BoxLayout):
             if not os.path.exists(file_path):
                 root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
                 return
-        
-            memory = load_program(file_path)
+            
+            memory = app.CoreInstance.load_program(file_path)
 
-            app = App.get_running_app()
-            root = app.root
+            # app = App.get_running_app()
+            # root = app.root
             self.populate_memory(root, memory)
             self.editor_popup.dismiss()
 
@@ -113,14 +114,15 @@ class LeftPaneWidget(BoxLayout):
         if not os.path.exists(file_path):
             root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
             return
-        
-        memory = load_program(file_path)
+
+        memory = app.CoreInstance.load_program(file_path)
 
         self.populate_memory(root, memory)
 
-        run_program(memory)
+        app.CoreInstance.run_program()
 
-        root.ids.uvsim_console.add_message("Program execution finished")
+        # root.ids.uvsim_console.add_message("Program execution finished")
+        # print("Program execution finished")
 
 
 class MemRegWidget(BoxLayout):
@@ -170,50 +172,46 @@ class ConsoleWidget(BoxLayout):
     # Example:
     # 
     # def isEven(self, number):
-    #     self.console.get_input(
+    #     self.ConsoleWidget.get_input(
     #         prompt_text="Give me a number: ",
-    #         InputFunction = self.isEven
+    #         InputFunction=labda user_input: self.isEven(user_input)
     #     )
 
     # To add a message to the console ouput, call add_message("a string you want printed")
 
 
-    CallbackFunction = ObjectProperty(None)
-    _current_prompt = StringProperty("")
+    CallbackFunction = ObjectProperty(None, allownone=True)
+    _current_prompt = StringProperty( "" ) 
 
-    def execute_command(self, input):
-        print(f"Command recieved: {input}")
+    def execute_command( self, input ):
+        print(f"Input recieved: { input }")
         self.ids.console_input.text = ""
 
         if self.CallbackFunction:
             callback_function = self.CallbackFunction
             self.CallbackFunction = None
-            self.disable_input()
-            
-            self.add_message(self._current_prompt + str(input))
-            self._current_prompt = None
-            callback_function(input)
-        else:
-            raise Exception("no inputcallback")
-    
-    def disable_input(self):
-        self.ids.console_input.disabled = True
-        self.ids.console_input.hint_text = "Running program..."
-        print(f"input is disabled")
+            self.ids.console_input.disabled = True
+            self.ids.console_input.hint_text = "Running program..."
 
-    def add_message(self, text=None):
+            self.add_message( self._current_prompt + str( input ) )
+            self._current_prompt = ""
+            callback_function( input )
+        else:
+            self.add_message("Error: No input callback function provided")
+
+    def add_message( self, text=None ):
         if text == None:
             return
 
         currentText = self.ids.console_output.text
 
         if currentText.strip():
-            newText = currentText + "\n" + str(text)
+            newText = currentText + "\n" + str( text )
         else:
-            newText = str(text)
+            newText = str( text )
         
         self.ids.console_output.text = newText
-        Clock.schedule_once(self._scroll_to_bottom, 0.1)
+        Clock.schedule_once( self._scroll_to_bottom, 0.1 )
 
     #added scroll to bottom funcion - console scolls to latest output
     def _scroll_to_bottom(self, *args):
@@ -229,14 +227,26 @@ class ConsoleWidget(BoxLayout):
         self.ids.console_input.hint_text = promptText
         self.ids.console_input.disabled = False
         self.ids.console_input.focus = True
-        print(f"input is enabled")
 
 class UVSimWindow(BoxLayout):
     pass
 
 class UVSimApp(App):
     def build(self):
+        Clock.schedule_once(self._setup_console_redirect, 0.1)
+
         return UVSimWindow()
+    
+    def _setup_console_redirect(self, dt):
+
+        # redirect std output to the custom console
+        add_message_func = App.get_running_app().root.ids.uvsim_console.add_message
+        sys.stdout = WriteToGuiConsole(add_message_func)
+        # sys.stderr = WriteToGuiConsole(add_message_func)
+
+        # use get_input instead of input
+        get_input_func = App.get_running_app().root.ids.uvsim_console.get_input
+        self.CoreInstance = UVSimCore(get_input_func)
     
 if __name__ == '__main__':
     UVSimApp().run()
