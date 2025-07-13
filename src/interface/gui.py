@@ -124,6 +124,23 @@ class LeftPaneWidget(BoxLayout):
         # root.ids.uvsim_console.add_message("Program execution finished")
         # print("Program execution finished")
 
+    def step_button(self):
+        app = App.get_running_app()
+        core = app.CoreInstance
+        root = app.root
+
+        core.step()
+
+        # update registers on gui
+        root.ids.mem_reg_display.ids.accumulator.text = f"{core.accumulator:+05d}"
+        root.ids.mem_reg_display.ids.program_counter.text = f"{core.program_counter:02d}"
+
+        # update memory on gui
+        memory_box = root.ids.mem_reg_display.ids.memory_box
+        for i in range(100):
+            row = memory_box.children[99 - i]
+            mem_input = row.children[0]
+            mem_input.text = f"{core.memory[i]:+05d}"
 
 class MemRegWidget(BoxLayout):
     # Sample 100 memory slots to test scrollability 

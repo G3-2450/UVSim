@@ -1,70 +1,110 @@
 from core.BasicMLOps import BasicMLOps
 
-# Returns a list of all of the commands in the file.
-def load_program(filename):
-    memory = [0] * 100
-    try:
-        with open(filename, 'r') as f:
-            for i, line in enumerate(f):
-                line = line.strip()
-                if line and (line.startswith('+') or line.startswith('-')):
-                    memory[i] = int(line)
-    except FileNotFoundError:
-        print("Error: File not found.")
-        exit()
-    return memory 
+class UVSimCore:
+    def __init__(self, get_input_callback):
+        self.get_input = get_input_callback #gets user input from console
+        self.memory = [0] *100
+        self.accumulator = 0
+        self.program_counter = 0 
+        self.halted = False
 
-def run_program(memory):
-    accumulator = 0
-    program_counter = 0
+    # Returns a list of all of the commands in the file.
+    def load_program(self, filename):
+        self.memory = [0] * 100
+        self.accumulator = 0
+        self.program_counter = 0
+        self.halted = False
 
-    while program_counter < len(memory):
-        instruction = memory[program_counter]
-        opcode = abs(instruction) // 100    # first two digits
-        operand = abs(instruction) % 100    # last two digits
+        try:
+            with open(filename, 'r') as f:
+                for i, line in enumerate(f):
+                    line = line.strip()
+                    if line and (line.startswith('+') or line.startswith('-')):
+                        self.memory[i] = int(line)
+        except FileNotFoundError:
+            print("Error: File not found.")
+            return None
+        return self.memory 
+
+    def run_program(self):
+        while not self.halted and self.program_counter < len(self.memory):
+            self.step()
+        
+    def step(self):
+        if self.halted or self.program_counter >= len(self.memory):
+            print("Program Halted or out of bounds")
+            return
+        
+        instruction = self.memory[self.program_counter]
+        opcode = abs(instruction) // 100 # first two digits
+        operand = abs(instruction) % 100 # last two digits
+
+        current_pc = self.program_counter # used to increment normally
 
         if opcode == 10:
-            BasicMLOps.read(memory, operand)
+            # BasicMLOps.read(memory, operand)
+            self.get_input(f"READ to memory [{operand}]:", lambda value: self._handle_read(operand, value))
+            return 
         elif opcode == 11:
-            BasicMLOps.write(memory, operand)
+            BasicMLOps.write(self.memory, operand)
         elif opcode == 20:
-            accumulator = BasicMLOps.load(memory, operand, accumulator)
+            accumulator = BasicMLOps.load(self.memory, operand, self.accumulator)
         elif opcode == 21:
-            BasicMLOps.store(memory, operand, accumulator)
+            BasicMLOps.store(self.memory, operand, self.accumulator)
         elif opcode == 30:
-            accumulator = BasicMLOps.add(accumulator, memory[operand])
+            self.accumulator = BasicMLOps.add(self.accumulator, self.memory[operand])
         elif opcode == 31:
-            accumulator = BasicMLOps.subtract(accumulator, memory[operand])
+            self.accumulator = BasicMLOps.subtract(self.accumulator, self.memory[operand])
         elif opcode == 32:
             try:
-                accumulator = BasicMLOps.divide(accumulator, memory[operand])
+                self.accumulator = BasicMLOps.divide(self.accumulator, self.memory[operand])
             except ZeroDivisionError as e:
                 print(e)
-                break
+                return
         elif opcode == 33:
-            accumulator = BasicMLOps.multiply(accumulator, memory[operand])
+            self.accumulator = BasicMLOps.multiply(self.accumulator, self.memory[operand])
         elif opcode == 40:
-            program_counter = BasicMLOps.branch(operand)
-            continue
+            self.program_counter = BasicMLOps.branch(operand)
+            return
         elif opcode == 41:
-            program_counter = BasicMLOps.branch_neg(program_counter, operand, accumulator)
-            continue
+            self.program_counter = BasicMLOps.branch_neg(self.program_counter, operand, self.accumulator)
+            return
         elif opcode == 42:
-            program_counter = BasicMLOps.branch_zero(program_counter, operand, accumulator)
-            continue
+            self.program_counter = BasicMLOps.branch_zero(self.program_counter, operand, self.accumulator)
+            return
         elif opcode == 43:
             BasicMLOps.halt()
-            break
+            self.halted = True
+            return
         else:
             print(f"Unknown instruction: {instruction}")
-            break
+            self.halted = True
+            return
 
-        program_counter += 1
+        self.program_counter = current_pc + 1 # only increment if not branched
 
+    def _handle_read(self, address, value):
+        try:
+            self.memory[address] = int(value)
+            self.program_counter += 1
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
+            
+'''
+# test input handler (console-based testing)
 def main():
     filename = input("Enter the BasicML program file (e.g. test1.txt): ").strip()
-    memory = load_program(filename)
-    run_program(memory)
+
+    def dummy_input(prompt, callback):
+        value = input(prompt)
+        callback(value)
+
+    core = UVSimCore(get_input_callback = dummy_input)
+    core.load_program(filename)
+
+    while not core.halted:
+        core.step()
 
 if __name__ == "__main__":
     main()
+'''
