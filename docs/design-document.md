@@ -1,7 +1,7 @@
 ## User Stories
-As a computer science student, I want to load and run machine language programs using a virtual simulator, so that I can better understand how CPUs execute instructions at the lowest level.
+As a user, I want to load and run machine language programs using an interactive virtual simulator, so that I can better understand how CPUs execute instructions at the lowest level.
 
-As a user, I want to provide input and see output as my program runs, so that I can verify that my code logic and data handling are working correctly.
+As a user, I want to provide input and see output as my program runs, so that I can verify that my code logic and data handling are working correctly and visualize instructions being performed in real time.
 
 
 ## Use Cases
