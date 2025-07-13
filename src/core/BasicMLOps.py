@@ -19,17 +19,17 @@
 # HALT = 43 Pause the program
 
 class BasicMLOps:
-    def __init__(self, parameter1, parameter2):
-        self.instance_variable1 = parameter1
-        self.instance_variable2 = parameter2
+    def __init__(self, console_input, callback):
+        self.get_input = console_input
+        self.callback = callback
 
     # IO OPERATIONS
 
     @staticmethod
-    def read(memory, address):
+    def read(self, memory, address):
         while True:
             try:
-                value = int(input(f"READ to memory [{address}]: "))
+                value = int(self.get_input(f"READ to memory [{address}]: "))
                 memory[address] = value
                 break
             except ValueError:

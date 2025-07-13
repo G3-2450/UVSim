@@ -1,7 +1,7 @@
 ## User Stories
-As a computer science student, I want to load and run machine language programs using a virtual simulator, so that I can better understand how CPUs execute instructions at the lowest level.
+As a user, I want to load and run machine language programs using an interactive virtual simulator, so that I can better understand how CPUs execute instructions at the lowest level.
 
-As a user, I want to provide input and see output as my program runs, so that I can verify that my code logic and data handling are working correctly.
+As a user, I want to provide input and see output as my program runs, so that I can verify that my code logic and data handling are working correctly and visualize instructions being performed in real time.
 
 
 ## Use Cases
@@ -65,3 +65,26 @@ goal -> navigate to a specified location in the program if the last operation re
 Actor -> Student  
 system -> the HALT command in UVSim.  
 goal -> Stop the program.  
+
+
+## GUI functions
+
+##### UPLOAD button
+Actor -> Student  
+system -> The upload button starts grabs all of the data from the user's file.
+goal -> Let the user select a desired file.
+
+##### RUN button  
+Actor -> Student  
+system -> Runs the commands from the user's text file.
+goal -> Graphically display the ouputs from running the user's file.
+
+##### STEP button  
+Actor -> Student  
+system -> Runs the commands from the user's text file one command at a time.
+goal -> Graphically display the ouputs from running the user's file one command at a time.
+
+##### COLOR button  
+Actor -> Student  
+system -> Change the color scheme.
+goal -> Provide color options for the user.

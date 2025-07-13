@@ -1,4 +1,9 @@
 from core.BasicMLOps import BasicMLOps
+from kivy.clock import Clock
+import os
+import sys
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# from interface.gui import ConsoleWidget
 
 class UVSimCore:
     def __init__(self, get_input_callback):
@@ -28,7 +33,8 @@ class UVSimCore:
 
     def run_program(self):
         while not self.halted and self.program_counter < len(self.memory):
-            self.step()
+            # self.step()
+            Clock.schedule_once(self.step, 0)
         
     def step(self):
         if self.halted or self.program_counter >= len(self.memory):
@@ -39,7 +45,7 @@ class UVSimCore:
         opcode = abs(instruction) // 100 # first two digits
         operand = abs(instruction) % 100 # last two digits
 
-        current_pc = self.program_counter # used to increment normally
+        self.program_counter # used to increment normally
 
         if opcode == 10:
             # BasicMLOps.read(memory, operand)
@@ -60,6 +66,7 @@ class UVSimCore:
                 self.accumulator = BasicMLOps.divide(self.accumulator, self.memory[operand])
             except ZeroDivisionError as e:
                 print(e)
+                # break
                 return
         elif opcode == 33:
             self.accumulator = BasicMLOps.multiply(self.accumulator, self.memory[operand])
@@ -81,7 +88,7 @@ class UVSimCore:
             self.halted = True
             return
 
-        self.program_counter = current_pc + 1 # only increment if not branched
+        self.program_counter += 1 # only increment if not branched
 
     def _handle_read(self, address, value):
         try:
@@ -95,15 +102,11 @@ class UVSimCore:
 def main():
     filename = input("Enter the BasicML program file (e.g. test1.txt): ").strip()
 
-    def dummy_input(prompt, callback):
-        value = input(prompt)
-        callback(value)
+    # not currently working
+    coreInstance = UVSimCore(sys.stdin) # start UVSim with the default standard input
 
-    core = UVSimCore(get_input_callback = dummy_input)
-    core.load_program(filename)
-
-    while not core.halted:
-        core.step()
+    coreInstance.load_program(filename)
+    coreInstance.run_program()
 
 if __name__ == "__main__":
     main()
