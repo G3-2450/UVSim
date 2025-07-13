@@ -109,7 +109,7 @@ class LeftPaneWidget(BoxLayout):
     def run_button(self):
         app = App.get_running_app()
         root = app.root
-
+        
         file_path = "user_program.txt"
         if not os.path.exists(file_path):
             root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
