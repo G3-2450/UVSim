@@ -35,10 +35,12 @@ class LeftPaneWidget(BoxLayout):
         # Once a file is selected, the Next button is clicked, passing the file to the editor popup.
         file_chooser = FileChooserListView(filters=['*.txt'], size_hint_y=0.9)
         btn_next = Button(text='Next', size_hint_y=0.1)
+        btn_cancel = Button(text='Cancel', size_hint_y=0.1)
 
         layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
         layout.add_widget(file_chooser)
         layout.add_widget(btn_next)
+        layout.add_widget(btn_cancel)
 
         self.file_popup = Popup(title='Select BasicML File',
                                 content=layout,
@@ -52,9 +54,14 @@ class LeftPaneWidget(BoxLayout):
             file_path = file_chooser.selection[0]
             self.file_popup.dismiss()
             self.open_editor_popup(file_path)
+        
+        def cancel_file_popup(instance):
+            self.file_popup.dismiss()
 
         btn_next.bind(on_release=open_editor)
+        btn_cancel.bind(on_release=cancel_file_popup)
         self.file_popup.open()
+
 
     def open_editor_popup(self, file_path):
         #Opens the editor popup where the user can choose to edit the contents of the selected .txt file.
@@ -66,10 +73,12 @@ class LeftPaneWidget(BoxLayout):
 
         self.editor_input = TextInput(text=content, multiline=True, size_hint_y=0.9)
         btn_save = Button(text='Save', size_hint_y=0.1)
+        btn_cancel = Button(text='Cancel', size_hint_y=0.1)
 
         layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
         layout.add_widget(self.editor_input)
         layout.add_widget(btn_save)
+        layout.add_widget(btn_cancel)
 
         self.editor_popup = Popup(title='Edit & Save File',
                                   content=layout,
@@ -95,8 +104,12 @@ class LeftPaneWidget(BoxLayout):
             # root = app.root
             self.populate_memory(root, memory)
             self.editor_popup.dismiss()
+        
+        def cancel_editor_popup(_):
+            self.editor_popup.dismiss()
 
         btn_save.bind(on_release=save_to_user_program)
+        btn_cancel.bind(on_release=cancel_editor_popup)
         self.editor_popup.open()
 
     def populate_memory(self, root, memory):
@@ -109,21 +122,38 @@ class LeftPaneWidget(BoxLayout):
     def run_button(self):
         app = App.get_running_app()
         root = app.root
-        
         file_path = "user_program.txt"
+
         if not os.path.exists(file_path):
-            root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
+            print("Error: 'user_program.txt' not found.")
             return
 
         memory = app.CoreInstance.load_program(file_path)
-
         self.populate_memory(root, memory)
-
         app.CoreInstance.run_program()
+        #print("Program execution finished.")
+
 
         # root.ids.uvsim_console.add_message("Program execution finished")
         # print("Program execution finished")
 
+    def step_button(self):
+        app = App.get_running_app()
+        core = app.CoreInstance
+        root = app.root
+
+        core.step()
+
+        # update registers on gui
+        root.ids.mem_reg_display.ids.accumulator.text = f"{core.accumulator:+05d}"
+        root.ids.mem_reg_display.ids.program_counter.text = f"{core.program_counter:02d}"
+
+        # update memory on gui
+        memory_box = root.ids.mem_reg_display.ids.memory_box
+        for i in range(100):
+            row = memory_box.children[99 - i]
+            mem_input = row.children[0]
+            mem_input.text = f"{core.memory[i]:+05d}"
 
 class MemRegWidget(BoxLayout):
     # Sample 100 memory slots to test scrollability 
