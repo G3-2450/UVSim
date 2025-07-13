@@ -5,18 +5,28 @@
 
     canvas.before:
         Color:
-            rgba: 0, 0, 0, 1
+            rgba: .1608, .1608, .1608, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
-    Label:
-        text: 'UVSim'
-        font_size: '40sp'
-        size_hint: 1, 0.3
-        halign: 'center'
-        valign: 'center'
-        text_size: self.size
+    BoxLayout:
+        size_hint: 1, 0.1
+        canvas.before:
+            Color:
+                rgba: 0.0, 0.518, 0.239, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'UVSim'
+            font_size: '40sp'
+            halign: 'center'
+            valign: 'center'
+            text_size: self.size
+            color: 1, 1, 1, 1 
+
 
     Label:
         text:
@@ -36,7 +46,11 @@
             id: upload_btn
             text: 'Upload .txt file'
             size_hint_x: 1
+            background_normal: ""
+            background_color: 0.0, 0.518, 0.239, 1
             on_release: root.upload_file()
+            
+
 
     # Run / Step buttons
     BoxLayout:
@@ -46,10 +60,16 @@
             id: run_btn
             text: 'Run'
             size_hint_x: 0.5
+            background_normal: ""
+            background_color: 0.0, 0.518, 0.239, 1
             on_release: root.run_button()
+            
 
         Button:
             id: step_btn
             text: 'Step'
             size_hint_x: 0.5
+            background_normal: ""
+            background_color: 0.0, 0.518, 0.239, 1
             on_release: root.step_button()
+            
