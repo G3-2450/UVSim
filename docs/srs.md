@@ -11,6 +11,9 @@
 - UVSim should not crash when a incorrect file type is provided
 - Works fully offline
 
+### Themes
+- The user should be able to select between 2 themes
+
 
 ## Functional Requirements
 
@@ -61,4 +64,6 @@
 
 ### FR-16 – Store Instruction
 **Description**: On op code (21), store the value from the accumulator to the designated memory location.
+
+
 

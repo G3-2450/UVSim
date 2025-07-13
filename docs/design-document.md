@@ -65,3 +65,26 @@ goal -> navigate to a specified location in the program if the last operation re
 Actor -> Student  
 system -> the HALT command in UVSim.  
 goal -> Stop the program.  
+
+
+## GUI functions
+
+##### UPLOAD button
+Actor -> Student  
+system -> The upload button starts grabs all of the data from the user's file.
+goal -> Let the user select a desired file.
+
+##### RUN button  
+Actor -> Student  
+system -> Runs the commands from the user's text file.
+goal -> Graphically display the ouputs from running the user's file.
+
+##### STEP button  
+Actor -> Student  
+system -> Runs the commands from the user's text file one command at a time.
+goal -> Graphically display the ouputs from running the user's file one command at a time.
+
+##### COLOR button  
+Actor -> Student  
+system -> Change the color scheme.
+goal -> Provide color options for the user.

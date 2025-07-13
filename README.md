@@ -20,17 +20,18 @@
 - Python 3
 - Kivy
 
-### Runing UVSim GUI
+### Runing UVSim (GUI)
 - In the console, navigate to /src/interface
-- Run `python3 .\main.py
+- Run `python3 .\gui.py
 - This will run the UVSim GUI.
-- Functionality will be added to the GUI in the 4th Milestone
 
-
-### Running UVSim
-- Download and unzip the latest release of UVSim.  
-- Navigate to the UVSim folder from the command line.  
-- Run `python3 UVSim.py`
+### Features
+- Upload file - select a .txt file with basicML commands for UVSim to run
+- Run - runs the selected file
+- Step - runs the selected file one line at a time
+- Theme - select a theme for the interface
+- Console - provides command outputs
+- Registers and Memory - displays the current registers and memory during execution
 
 ### UVSim Console Commands
 - READ = 10        Read value from keyoboard into a specific memory location.   
@@ -48,12 +49,9 @@
 
 ---
 
-### Features
-
----
 
 ### Technology Used  
-- **Front End:** Python GUI  
+- **Front End:** Python GUI - KIVY
 - **Back End:** Python   
 - **Dataase:**  
 - **Tools/Project Management:**
