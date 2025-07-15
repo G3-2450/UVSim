@@ -5,7 +5,7 @@
 
     canvas.before:
         Color:
-            rgba: .1608, .1608, .1608, 1
+            rgba: root.bg_color
         Rectangle:
             pos: self.pos
             size: self.size
@@ -35,9 +35,10 @@
             orientation: 'vertical'
             size_hint_x: .5
             Label:
+                id: accumulator_label
                 text: 'Accumulator'
                 font_size: '14sp'
-                color: 1, 1, 1, 1
+                color: root.label_color
                 size_hint_y: None
                 height: dp(20)
             TextInput:
@@ -47,17 +48,18 @@
                 multiline: False
                 halign: 'center'
                 font_size: '16sp'
-                background_color: 0, 0, 0, 1
-                foreground_color: 1, 1, 1, 1
+                background_color: root.box_bg_color
+                foreground_color: root.box_text_color
 
         # Program Counter
         BoxLayout:
             orientation: 'vertical'
             size_hint_x: .5
             Label:
+                id: program_counter_label
                 text: 'Program Counter'
                 font_size: '14sp'
-                color: 1, 1, 1, 1
+                color: root.label_color
                 size_hint_y: None
                 height: dp(20)
             TextInput:
@@ -67,8 +69,8 @@
                 multiline: False
                 halign: 'center'
                 font_size: '16sp'
-                background_color: 0, 0, 0, 1
-                foreground_color: 1, 1, 1, 1
+                background_color: root.box_bg_color
+                foreground_color: root.box_text_color
 
     # Memory Locations
     Label:

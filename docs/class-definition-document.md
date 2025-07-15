@@ -122,14 +122,68 @@ Handles all basic ML operations, categorized into input/output operations, load/
 
 ---
 
-#### main.py (interface)
+#### gui.py (interface)
 **Initializes and runs the program interface for UVSim, loading visual components from three .kv files and defining the main interface classes used in the application.**
 
 ##### Class: LeftPaneWidget()
 
 - Purpose: displays the left pane of the interface including instructions and buttons for interaction (upload, run, step, start over)
 - Defined in: LeftPaneWidget.kv, linked to LeftPaneWidget class in main.py
-- Functions: none defined in Python for now, all interactions are defined visually in .kv file
+- Functions:
+  - __init__(self, **kwargs)
+    - Purpose: Initialize the widget and its layout
+    - Return: None
+    - Preconditions: Kivy will call this automatically
+    - Postconditions: The layout is ready for interaction
+
+  - upload_file(self)
+    - Purpose: Opens a file chooser popup to select a .txt file
+    - Return: None
+    - Preconditions: Kivy app is running; file selection popup is needed
+    - Postconditions: Popup is shown; user can select a .txt file
+
+  - open_editor_popup (self, file_path)
+    - Purpose: Opens a popup for editing the selected .txt file
+    - Return: None
+    - Preconditions: A valid path to a .txt file must be provided
+    - Postconditions: Popup displays file contents for editing and saving
+
+  - save_to_user_program(_) (inner function)
+    - Purpose: Saves edited text to user_program.txt, loads it into memory, and populates GUI
+    - Return: None
+    - Preconditions: File has been opened and user clicked "Save"
+    - Postconditions: File saved as user_program.txt; memory GUI is updated
+
+  - cancel_editor_popup(_)
+    - Purpose: Dismisses the file editor popup without saving
+    - Return: None
+    - Preconditions: Editor popup is open
+    - Postconditions: Editor popup is closed
+
+  - cancel_file_popup(_)
+    - Purpose: Dismisses the file chooser popup
+    - Return: None
+    - Preconditions: File chooser popup is open
+    - Postconditions: File chooser popup is closed
+     
+  - popuplate_memory(self, root, memory)
+    - Purpose: Fills the GUI memory slots with values from a given memory list
+    - Return: None
+    - Preconditions: memory must be a list of 100 integers; GUI must be built
+    - Postconditions: All 100 memory slots in the GUI display the corresponding value
+
+  - run_button(self)
+    - Purpose: Loads the user program, populates memory, and runs the program through UVSimCore
+    - Return: None
+    - Preconditions: user_program.txt must exist; UVSimCore must be initialized
+    - Postconditions: Program is executed (possibly requesting input), memory is updated
+     
+  - step_button(self)
+    - Purpose: Executes one instruction via UVSimCore.step() and updates memory and register display
+    - Return: None
+    - Preconditions: Program must be loaded into CoreInstance; step() should be implemented
+    - Postconditions: One instruction is executed; accumulator, program counter, and memory view are updated
+
 - Pre-Conditions: UI must be loaded using Builder.load_file('LeftPaneWidget.kv')
 - Post-Conditions: the widget renders in the left pane and allows interaction through buttons
 
@@ -138,25 +192,49 @@ Handles all basic ML operations, categorized into input/output operations, load/
 - Purpose: Handles the visual display of the accumulator, program counter, and memory slots from address 00 to 99.
 - Defined in: MemRegWidget.kv, logic in main.py
 - Functions:
-    - on_kv_post(self, base_widget)
-        - Purpose: called after the widget is fully initialized; triggers population of the memory display
-        - Parameters: base_widget – root of the UI tree
-        - Returns: None.
-        - Pre-Conditions: widget must be loaded via .kv file and instantiated
-        - Post-Conditions: calls populate_memory() to add memory rows to the UI
+  - on_kv_post(self, base_widget)
+    - Purpose: called after the widget is fully initialized; triggers population of the memory display
+  - Parameters: base_widget – root of the UI tree
+    - Returns: None.
+    - Pre-Conditions: widget must be loaded via .kv file and instantiated
+    - Post-Conditions: calls populate_memory() to add memory rows to the UI
         
-    - populate_memory(self)
-        - Purpose: dynamically populates the memory view with 100 labeled TextInput fields for addresses 00–99.
-        - Parameters: none
-        - Returns: none
-        - Pre-Conditions: memory_box ID must be defined in MemRegWidget.kv
-        - Post-Conditions: memory display box is populated with scrollable memory entries
+  - populate_memory(self)
+    - Purpose: dynamically populates the memory view with 100 labeled TextInput fields for addresses 00–99.
+    - Parameters: none
+    - Returns: none
+    - Pre-Conditions: memory_box ID must be defined in MemRegWidget.kv
+    - Post-Conditions: memory display box is populated with scrollable memory entries
 
 ##### Class: ConsoleWidget()
 
 - Purpose: manages user command input and output display (scrollable console output and command entry).
 - Defined in: ConsoleWidget.kv, linked to ConsoleWidget class in main.py.
-- Functions: none implemented in Python yet
+- Functions:
+  - execute_command(self, input)
+    - Purpose: Handles when the user presses Enter in the console; calls a stored input callback
+    - Return: None
+    - Preconditions: A CallbackFunction must be set via get_input()
+    - Postconditions: Callback is triggered with input; text field is cleared and disabled
+
+  - add_message(self, text=None)
+    - Purpose: Adds a new line of text to the scrollable console display
+    - Return: None
+    - Preconditions: text must not be None
+    - Postconditions: Console text updated; view scrolls to bottom
+
+  - _scroll_to_bottom(self, *args)
+    - Purpose: Scrolls the console output to the most recent line
+    - Return: None
+    - Preconditions: Should be scheduled by Clock.schedule_once(...)
+    - Postconditions: Console is scrolled fully down
+
+  - get_input(self, prompText="Enter value: ", InputFunction=None)
+    - Purpose: Enables the console input and registers a callback for when Enter is pressed
+    - Return: None
+    - Preconditions: A valid callable must be passed as InputFunction
+    - Postconditions: Console input is enabled and waiting for user input
+    
 - Pre-Conditions: UI must be loaded using Builder.load_file('ConsoleWidget.kv')
 - Post-Conditions: the widget renders in the right pane displaying the console
 
@@ -173,12 +251,15 @@ Handles all basic ML operations, categorized into input/output operations, load/
 - Purpose: Entry point for the Kivy application. Initializes the window and loads the root layout UVSimWindow.
 - Defined in: main.py
 - Functions:
-    - build(self)
-        - Purpose: instantiates and returns the root UI widget
-        - Parameters: none
-        - Returns: UVSimWindow instance
-        - Pre-Conditions: called automatically by Kivy
-        - Post-Conditions: application window opens with full interface
+  - build(self)
+    - Purpose: instantiates and returns the root UI widget
+    - Parameters: none
+    - Returns: UVSimWindow instance
+    - Pre-Conditions: called automatically by Kivy
+    - Post-Conditions: application window opens with full interface
 
-
-
+  - _setup_console_redirect(self, dt)
+    - Purpose: Redirects sys.stdout to the GUI console and initializes UVSimCore
+    - Return: None
+    - Preconditions: The GUI must be fully initialized
+    - Postconditions: print() now writes to GUI; CoreInstance is available

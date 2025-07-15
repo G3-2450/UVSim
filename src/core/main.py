@@ -32,9 +32,16 @@ class UVSimCore:
         return self.memory 
 
     def run_program(self):
+        Clock.schedule_interval(self._run_step, 0.1)
+        '''
         while not self.halted and self.program_counter < len(self.memory):
             # self.step()
             Clock.schedule_once(self.step, 0)
+        '''
+    def _run_step(self, dt):
+        if self.halted or self.program_counter >= len(self.memory):
+            return False
+        self.step()
         
     def step(self):
         if self.halted or self.program_counter >= len(self.memory):

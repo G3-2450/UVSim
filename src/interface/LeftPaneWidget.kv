@@ -1,3 +1,4 @@
+# Updated LeftPaneWidget.kv
 <LeftPaneWidget>:
     orientation: 'vertical'
     padding: 50
@@ -5,16 +6,17 @@
 
     canvas.before:
         Color:
-            rgba: .1608, .1608, .1608, 1
+            rgba: root.bg_color
         Rectangle:
             pos: self.pos
             size: self.size
 
     BoxLayout:
         size_hint: 1, 0.1
+        spacing: 10
         canvas.before:
             Color:
-                rgba: 0.0, 0.518, 0.239, 1
+                rgba: root.header_bg_color
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -25,21 +27,29 @@
             halign: 'center'
             valign: 'center'
             text_size: self.size
-            color: 1, 1, 1, 1 
+            color: root.header_text_color
+
+        Spinner:
+            id: theme_spinner
+            text: 'Theme'  # Unicode sun and arrow
+            values: ['Light Mode', 'Dark Mode']
+            size_hint: None, None
+            size: dp(100), dp(40)
+            font_size: '16sp'
+            color: 1, 1, 1, 1
+            background_normal: ''
+            background_color: 0.0, 0.518, 0.239, 1
+            on_text: root.toggle_theme(self.text)
 
 
     Label:
-        text:
-            """1. Prepare a .txt file with BasicML instructions.
-            2. Click the 'Upload .txt file' button to load and edit your program.
-            3. File will be saved as user_program.txt after edits.
-            4. You can then use Run/Step to execute the file."""
+        text: """1. Prepare a .txt file with BasicML instructions.\n2. Click the 'Upload .txt file' button to load and edit your program.\n3. File will be saved as user_program.txt after edits.\n4. You can then use Run/Step to execute the file."""
         size_hint: 1, 0.4
         text_size: self.size
         halign: 'left'
         valign: 'top'
+        color: root.text_color
 
-    # Upload button
     BoxLayout:
         size_hint: 1, 0.1
         Button:
@@ -47,12 +57,10 @@
             text: 'Upload .txt file'
             size_hint_x: 1
             background_normal: ""
-            background_color: 0.0, 0.518, 0.239, 1
+            background_color: root.button_bg_color
+            color: root.button_text_color
             on_release: root.upload_file()
-            
 
-
-    # Run / Step buttons
     BoxLayout:
         size_hint: 1, 0.1
         spacing: 20
@@ -61,15 +69,15 @@
             text: 'Run'
             size_hint_x: 0.5
             background_normal: ""
-            background_color: 0.0, 0.518, 0.239, 1
+            background_color: root.button_bg_color
+            color: root.button_text_color
             on_release: root.run_button()
-            
 
         Button:
             id: step_btn
             text: 'Step'
             size_hint_x: 0.5
             background_normal: ""
-            background_color: 0.0, 0.518, 0.239, 1
+            background_color: root.button_bg_color
+            color: root.button_text_color
             on_release: root.step_button()
-            
