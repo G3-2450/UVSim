@@ -227,7 +227,7 @@ class MemRegWidget(BoxLayout):
                 spacing = dp(8)
             )
 
-            mem_lable = Label(
+            mem_label = Label(
                 text=f"{i:02}",
                 size_hint_x=None,
                 width=dp(30),
@@ -250,7 +250,7 @@ class MemRegWidget(BoxLayout):
                 height=dp(30)
             )
 
-            row.add_widget(mem_lable)
+            row.add_widget(mem_label)
             row.add_widget(mem_input)
             memory_box.add_widget(row)
 
