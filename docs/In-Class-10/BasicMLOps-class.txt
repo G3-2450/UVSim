@@ -1,0 +1,36 @@
+1. Code Formatting and Style
+- Is the code consistently formatted?
+The same blank space style is used throughout. 
+- Are naming conventions followed for variables, functions, etc.?
+Camel case is used for the variables and snake case is used for functions.
+
+2. Correctness and Completeness
+- Are all algorithms implemented correctly?
+Yes. All of the algorithms work as expected
+- Are there any logical errors or incorrect assumptions?
+Yes. We were planning on passing in a callback function to BasicMLOps before we realized that only the read() function needed it. We instead recreated the read function in the UVSimCore class. To summarize, the __init__ and read() classes are not needed anymore.
+
+3. Efficiency
+- Are there any unnecessary computations or redundant operations?
+- Can any parts of the code be optimized for better performance?
+Yes. This class has many side effects, including printing to the console. This should not happen.
+
+4. Error Handling
+- Are potential errors or exceptions handled properly?
+- Is there appropriate input validation to prevent unexpected issues?
+multiply, subtract, add, store, load, and write functions do not have any error handling or input validation.
+
+5. Documentation and Comments
+- Is the code well-documented, explaining the purpose and logic of complex sections?
+- Are all functions and modules accompanied by comments describing their behavior?
+There is almost no documentation. There is a description from the assignment at the top for ease of access.
+
+6. Security
+- Are there any security vulnerabilities, such as SQL injections or buffer overflows?
+- Is sensitive data properly encrypted and secured?
+This program does not have sensitive data. I don't know anything about program security.
+
+7. Portability and Maintainability
+- Is the code written in a way that it can be easily adapted or modified?
+- Are there hard-coded values that could be replaced with variables or constants?
+More documentation would help. There are no magic values. The function side effects make it difficult to diagnose problems.
