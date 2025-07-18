@@ -1,0 +1,45 @@
+Code Inspection Checklist
+
+core/gui.py class MemRegWidget(BoxLayout)
+
+1. Code Formatting and Style
+- Is the code consistently formatted?
+Yes the code uses consistent indentation/spacing
+- Are naming conventions followed for variables, functions, etc.?
+Functions follow snake_case and class name is in PascalCase. Variable names are descriptive.
+
+2. Correctness and Completeness
+- Are all algorithms implemented correctly?
+Memory is populated using a loop
+- Are there any logical errors or incorrect assumptions?
+There was a minor typo but has no been correct. Logical errors/assumptions should be resolved.
+
+3. Efficiency
+- Are there any unnecessary computations or redundant operations?
+No obvious redundant computations.
+- Can any parts of the code be optimized for better performance?
+Scalability could be a concern if memory size needed to be increased. 
+
+4. Error Handling
+- Are potential errors or exceptions handled properly?
+Edge cases are unlikely, especially in this controlled environment. Something like missing memory_box could be accounted for. 
+- Is there appropriate input validation to prevent unexpected issues?
+Memory inputs are set to readonly which prevents inlaid user edits.
+
+5. Documentation and Comments
+- Is the code well-documented, explaining the purpose and logic of complex sections?
+There are no inline comments/docstrings. The function is straightforward, but adding explanations could improve readability.
+- Are all functions and modules accompanied by comments describing their behavior?
+Docstrings not present. Explanations would be useful.
+
+6. Security
+- Are there any security vulnerabilities, such as SQL injections or buffer overflows?
+No direct security risk as the class only handles GUI rendering/readonly memory display.
+- Is sensitive data properly encrypted and secured?
+No sensitive data is used.
+
+7. Portability and Maintainability
+- Is the code written in a way that it can be easily adapted or modified?
+Yes, row generation is flexible, particularly with theme/scale.
+- Are there hard-coded values that could be replaced with variables or constants?
+Yes because of the specific requirement of 100 memory locations. 

@@ -81,7 +81,7 @@
 
 
 ##### Milestone 5:
-- **Deadline:** 
+- **Deadline:** July 28th
 - **Scrum Master:** Taylor
 - **Scribe:** Tim
 
