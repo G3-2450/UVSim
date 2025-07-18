@@ -10,10 +10,12 @@
 - Timothy Faupusa
 
 #### Agenda
-1. Discuss Milestone 5
+1. Discuss Milestone 5 requirements
+2. Change wireframe design
+3. Split up work for the first week of the milestone
 
 #### Discussion
-- Up until Monday, we will focus on changing the UI to fit new requirements and adding new functionality to the memory
+- Up until Monday, we will focus on changing the UI to fit new requirements and add new functionality to the memory.
 
 #### Action Items:
 **Taylor:** 
