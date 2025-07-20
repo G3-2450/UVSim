@@ -254,7 +254,7 @@ class MemRegWidget(BoxLayout):
             row.add_widget(mem_input)
             memory_box.add_widget(row)
 
-    bg_color = ListProperty([0.1608, 0.1608, 0.1608, 1])
+    bg_color = ListProperty([0.09, 0.09, 0.09, 1])
     label_color = ListProperty([1, 1, 1, 1])
     box_bg_color = ListProperty([0, 0, 0, 1])
     box_text_color = ListProperty([1, 1, 1, 1])

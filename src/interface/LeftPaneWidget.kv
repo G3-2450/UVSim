@@ -4,13 +4,22 @@
     spacing: dp(22) # space between header and content
     padding: 0, dp(20), dp(20), dp(20) # Padding around window content
     #      left, top, right, bottom
+
     canvas.before:
         Color:
-            rgba: root.bg_color
+            rgba: .09, .09, .09, 1 # Background color
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [dp(10)]
+
+    #canvas.before:
+    #    Color:
+    #        rgba: root.bg_color
+    #    RoundedRectangle:
+    #        pos: self.pos
+    #        size: self.size
+    #        radius: [dp(10)]
 
     # HEADER
     BoxLayout:
@@ -37,7 +46,6 @@
         orientation: 'horizontal'
         spacing: dp(22) # Space between tabs and content
         size_hint_x: 1
-
     
         # TABS
         BoxLayout:
@@ -45,21 +53,55 @@
             spacing: dp(16) # space between tabs
             size_hint_x: 1/3
             size_hint_y: 1
+            
+            ScrollView:
+                bar_width: dp(10)
+                do_scroll_x: False
+                size_hint_y: 1
 
-            # UPLOAD BUTTON
-            BoxLayout:
-                size_hint: 1, None
-                height: dp(40)
-                Button:
-                    id: upload_btn
-                    text: 'Upload'
-                    size_hint_x: 1
+                BoxLayout:
+                    id: memory_box
+                    orientation: 'vertical'
                     size_hint_y: None
-                    height: dp(40)
-                    background_normal: ""
-                    background_color: root.button_bg_color
-                    color: root.button_text_color
-                    on_release: root.upload_file()
+                    height: self.minimum_height
+                    spacing: dp(16)
+
+                    # add buttons in main
+
+                    Button:
+                        text: 'Tab 1'
+                        size_hint_x: 1
+                        size_hint_y: None
+                        height: dp(40)
+                        # Add any other styling/actions
+                        background_normal: ""
+                        background_color: root.button_bg_color
+                        color: 1, 1, 1, 1
+
+                    Button:
+                        text: 'Tab 2'
+                        size_hint_x: 1
+                        size_hint_y: None
+                        height: dp(40)
+                        # Add any other styling/actions
+                        background_normal: ""
+                        background_color: root.button_bg_color
+                        color: 1, 1, 1, 1
+
+            # Flexible spacer
+            #Widget: 
+            #    size_hint_y: 1
+           
+            Button:
+                id: upload_btn
+                text: 'Upload'
+                size_hint_x: 1
+                size_hint_y: None
+                height: dp(40)
+                background_normal: ""
+                background_color: root.button_bg_color
+                color: root.button_text_color
+                on_release: root.upload_file()
 
             Spinner:
                 id: theme_spinner
