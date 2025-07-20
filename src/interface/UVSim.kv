@@ -12,8 +12,8 @@
 
 <UVSimWindow>:
     orientation: 'horizontal' # Two panes side-by-side
-    spacing: dp(12) # Space between panes
-    padding: dp(12) # Padding around window content
+    spacing: dp(22) # Space between panes
+    padding: dp(22) # Padding around window content
     size_hint_x: 1
     size_hint_y: 1
 
@@ -31,22 +31,23 @@
         orientation: 'vertical'
         LeftPaneWidget:
             id: left_panel
-    
+        
     # RIGHT PANE
     BoxLayout:
         id: right_pane
         orientation: 'horizontal'
         size_hint_x: 2/3
         size_hint_y: 1
-        spacing: dp(12) # Space between Console and Reg/Mem sections
-        padding: dp(12)
+        spacing: dp(22) # Space between Console and Reg/Mem sections
+        padding: dp(22)
         
         canvas.before:
             Color:
                 rgba: .1608, .1608, .1608, 1 # Background color
-            Rectangle:
+            RoundedRectangle:
                 pos: self.pos
                 size: self.size
+                radius: [dp(10)]
         
         # REGISTERS AND MEMORY
         MemRegWidget:

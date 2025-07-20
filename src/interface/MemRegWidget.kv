@@ -11,6 +11,20 @@
             size: self.size
 
     # Registers
+    #Label:
+    #    canvas.before:
+    #        Color:
+    #            rgba: 0.0, 0.518, 0.239, 1
+    #        Rectangle:
+    #            pos: self.pos
+    #            size: self.size
+    #    text: 'Registers'
+    #    font_size: '18sp'
+    #    color: 1, 1, 1, 1 # whtie text
+    #    size_hint_y: None
+    #    height: self.texture_size[1] + dp(20)
+
+    # Memory Locations
     Label:
         canvas.before:
             Color:
@@ -18,12 +32,28 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-        text: 'Registers'
+        text: 'Memory'
         font_size: '18sp'
-        color: 1, 1, 1, 1 # whtie text
+        color: 1, 1, 1, 1  # white text
         size_hint_y: None
         height: self.texture_size[1] + dp(20)
 
+    ScrollView:
+        bar_width: dp(10)
+        do_scroll_x: False
+
+        BoxLayout:
+            id: memory_box
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: dp(8)
+            padding: dp(8)
+
+            # Sample Memory slots in main
+
+    
+    # PROGRAM COUNTER & ACCUMULATOR
     BoxLayout:
         orientation: 'horizontal'
         size_hint_y: None
@@ -57,7 +87,7 @@
             size_hint_x: .5
             Label:
                 id: program_counter_label
-                text: 'Program Counter'
+                text: 'PC'
                 font_size: '14sp'
                 color: root.label_color
                 size_hint_y: None
@@ -71,32 +101,4 @@
                 font_size: '16sp'
                 background_color: root.box_bg_color
                 foreground_color: root.box_text_color
-
-    # Memory Locations
-    Label:
-        canvas.before:
-            Color:
-                rgba: 0.0, 0.518, 0.239, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-        text: 'Memory (00 - 99)'
-        font_size: '18sp'
-        color: 1, 1, 1, 1  # white text
-        size_hint_y: None
-        height: self.texture_size[1] + dp(20)
-
-    ScrollView:
-        bar_width: dp(10)
-        do_scroll_x: False
-
-        BoxLayout:
-            id: memory_box
-            orientation: 'vertical'
-            size_hint_y: None
-            height: self.minimum_height
-            spacing: dp(8)
-            padding: dp(8)
-
-            # Sample Memory slots in main
 
