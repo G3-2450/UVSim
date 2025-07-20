@@ -33,7 +33,7 @@
                 pos: self.pos
                 size: self.size
         text: 'Memory'
-        font_size: '18sp'
+        font_size: '22sp'
         color: 1, 1, 1, 1  # white text
         size_hint_y: None
         height: self.texture_size[1] + dp(20)
@@ -55,22 +55,23 @@
     
     # PROGRAM COUNTER & ACCUMULATOR
     BoxLayout:
-        orientation: 'horizontal'
+        orientation: 'vertical'
         size_hint_y: None
-        height: dp(60)
-        spacing: dp(20)
+        height: dp(68)
+        spacing: dp(8)
+        padding: 0, 0, dp(10), 0
 
         # Accumulator
         BoxLayout:
-            orientation: 'vertical'
-            size_hint_x: .5
+            orientation: 'horizontal'
+            size_hint_x: 1
             Label:
                 id: accumulator_label
-                text: 'Accumulator'
+                text: 'ACC'
+                halign: 'right'
+                valign: 'middle'
                 font_size: '14sp'
                 color: root.label_color
-                size_hint_y: None
-                height: dp(20)
             TextInput:
                 id: accumulator
                 text: '0000'
@@ -83,15 +84,15 @@
 
         # Program Counter
         BoxLayout:
-            orientation: 'vertical'
-            size_hint_x: .5
+            orientation: 'horizontal'
+            size_hint_x: 1
             Label:
                 id: program_counter_label
                 text: 'PC'
+                halign: 'right'
+                valign: 'middle'
                 font_size: '14sp'
                 color: root.label_color
-                size_hint_y: None
-                height: dp(20)
             TextInput:
                 id: program_counter
                 text: '00'

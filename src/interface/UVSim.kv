@@ -26,7 +26,7 @@
 
     # LEFT PANE
     BoxLayout:
-        size_hint_x: 1/3
+        size_hint_x: 2/5
         size_hint_y: 1
         orientation: 'vertical'
         LeftPaneWidget:
@@ -36,7 +36,7 @@
     BoxLayout:
         id: right_pane
         orientation: 'horizontal'
-        size_hint_x: 2/3
+        size_hint_x: 3/5
         size_hint_y: 1
         spacing: dp(22) # Space between Console and Reg/Mem sections
         padding: dp(22)
@@ -52,11 +52,11 @@
         # REGISTERS AND MEMORY
         MemRegWidget:
             id: mem_reg_display
-            size_hint_x: 0.5
+            size_hint_x: 2/5
             size_hint_y: 1
 
         # CONSOLE SECTION
         ConsoleWidget:
             id: uvsim_console
-            size_hint_x: 0.5
+            size_hint_x: 3/5
             size_hint_y: 1

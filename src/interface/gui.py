@@ -223,7 +223,7 @@ class MemRegWidget(BoxLayout):
             row = BoxLayout(
                 orientation = 'horizontal',
                 size_hint_y = None,
-                height = dp(40),
+                height = dp(30),
                 spacing = dp(8)
             )
 
