@@ -219,7 +219,7 @@ class MemRegWidget(BoxLayout):
 
     def populate_memory(self):
         memory_box = self.ids.memory_box
-        for i in range(100):
+        for i in range(250):
             row = BoxLayout(
                 orientation = 'horizontal',
                 size_hint_y = None,

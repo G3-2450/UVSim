@@ -8,14 +8,14 @@ import sys
 class UVSimCore:
     def __init__(self, get_input_callback):
         self.get_input = get_input_callback #gets user input from console
-        self.memory = [0] *100
+        self.memory = [0] *250
         self.accumulator = 0
         self.program_counter = 0 
         self.halted = False
 
     # Returns a list of all of the commands in the file.
     def load_program(self, filename):
-        self.memory = [0] * 100
+        self.memory = [0] * 250
         self.accumulator = 0
         self.program_counter = 0
         self.halted = False
@@ -33,11 +33,7 @@ class UVSimCore:
 
     def run_program(self):
         Clock.schedule_interval(self._run_step, 0.1)
-        '''
-        while not self.halted and self.program_counter < len(self.memory):
-            # self.step()
-            Clock.schedule_once(self.step, 0)
-        '''
+
     def _run_step(self, dt):
         if self.halted or self.program_counter >= len(self.memory):
             return False
@@ -49,8 +45,8 @@ class UVSimCore:
             return
         
         instruction = self.memory[self.program_counter]
-        opcode = abs(instruction) // 100 # first two digits
-        operand = abs(instruction) % 100 # last two digits
+        opcode = abs(instruction) // 10000 # first two digits
+        operand = abs(instruction) % 10000 # last two digits
 
         self.program_counter # used to increment normally
 
