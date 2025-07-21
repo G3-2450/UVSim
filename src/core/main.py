@@ -45,8 +45,8 @@ class UVSimCore:
             return
         
         instruction = self.memory[self.program_counter]
-        opcode = abs(instruction) // 10000 # first two digits
-        operand = abs(instruction) % 10000 # last two digits
+        opcode = abs(instruction) // 1000 # first two digits
+        operand = abs(instruction) % 1000 # last two digits
 
         self.program_counter # used to increment normally
 
