@@ -1,3 +1,12 @@
+# GENERAL LAYOUT
+# Left pane - vertical
+    # Header
+    # Body - horizontal
+        # Tabs
+        # Text Editor and buttons - vertical
+            # Text Editor
+            # Buttons
+
 <LeftPaneWidget>:
     orientation: 'vertical'
     spacing: dp(22)
@@ -82,12 +91,12 @@
                 foreground_color: 1, 1, 1, 1
                 size_hint: 1, 1
 
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1           # white border
-                    Line:
-                        width: 1.5
-                        rectangle: self.x, self.y, self.width, self.height
+                # canvas.before:
+                #    Color:
+                #        rgba: 1, 1, 1, 1           # white border
+                #    Line:
+                #        width: 1.5
+                #        rectangle: self.x, self.y, self.width, self.height
 
             BoxLayout:
                 orientation: 'vertical'
