@@ -4,9 +4,28 @@ import os
 import sys
 
 class UVSimCore:
+    # IO
+    READ = 10 
+    WRITE = 11
+    LOAD = 20
+    STORE = 21
+    # ARITHMETIC
+    ADD = 30
+    SUBTRACT = 31
+    DIVIDE = 32
+    MULTIPLY = 33
+    # CONTROL
+    BRANCH = 40
+    BRANCHNEG = 41
+    BRANCHZERO = 42
+    HALT = 43
+
+    MEMORY_SIZE = 100
+
     def __init__(self, get_input_callback):
         self.get_input = get_input_callback  # gets user input from console
-        self.memory = [0] * 250
+        self.memory_size = 250
+        self.memory = [0] * self.memory_size
         self.accumulator = 0
         self.program_counter = 0
         self.halted = False
@@ -30,7 +49,7 @@ class UVSimCore:
         return converted
 
     def load_program(self, filename):
-        self.memory = [0] * 250
+        self.memory = [0] * self.memory_size
         self.accumulator = 0
         self.program_counter = 0
         self.halted = False
@@ -39,8 +58,8 @@ class UVSimCore:
             with open(filename, 'r') as f:
                 lines = [line.strip() for line in f if line.strip()]
 
-            if len(lines) > 250:
-                raise ValueError("Program has more than 250 lines.")
+            if len(lines) > self.memory_size:
+                raise ValueError(f"Program has more than {self.memory_size} lines.")
 
             # Detect file format
             if all(len(line) == 5 for line in lines):  # 4-digit format (+1007)
@@ -83,7 +102,7 @@ class UVSimCore:
         opcode = abs(instruction) // 1000    # first three digits (e.g. 010)
         operand = abs(instruction) % 1000    # last three digits (e.g. 007)
 
-        if operand < 0 or operand > 249:
+        if operand < 0 or operand > self.memory_size - 1:
             print(f"Invalid memory access at line {self.program_counter}: {operand}")
             self.halted = True
             return
