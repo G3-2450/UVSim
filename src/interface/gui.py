@@ -31,7 +31,7 @@ class LeftPaneWidget(BoxLayout):
         super().__init__(**kwargs)
 
     #UI theme colors
-    bg_color = ListProperty([0, 0, 0, 1])
+    bg_color = ListProperty([0.09, 0.09, 0.09, 1])
     text_color = ListProperty([1, 1, 1, 1])
     button_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
     button_text_color = ListProperty([1, 1, 1, 1])
@@ -67,7 +67,7 @@ class LeftPaneWidget(BoxLayout):
 
         else:
             # Set dark theme colors
-            self.bg_color = [0, 0, 0, 1]
+            self.bg_color = [0.09, 0.09, 0.09, 1]
             self.text_color = [1, 1, 1, 1]
             self.button_bg_color = [0.0, 0.518, 0.239, 1]
             self.button_text_color = [1, 1, 1, 1]
@@ -75,10 +75,10 @@ class LeftPaneWidget(BoxLayout):
             self.header_text_color = [1, 1, 1, 1]
 
             # Reset right pane background
-            root.ids.right_pane.canvas.before.children[0].rgba = (0.1608, 0.1608, 0.1608, 1)
+            root.ids.right_pane.canvas.before.children[0].rgba = (0.09, 0.09, 0.09, 1)
 
             # Reset MemReg background to gray
-            root.ids.mem_reg_display.canvas.before.children[0].rgba = (0.1608, 0.1608, 0.1608, 1)
+            root.ids.mem_reg_display.canvas.before.children[0].rgba = (0.09, 0.09, 0.09, 1)
 
             # Reset label colors to white
             root.ids.mem_reg_display.ids.accumulator_label.color = (1, 1, 1, 1)
@@ -270,7 +270,7 @@ class MemRegWidget(BoxLayout):
             row.add_widget(mem_input)
             memory_box.add_widget(row)
 
-    bg_color = ListProperty([0.1608, 0.1608, 0.1608, 1])
+    bg_color = ListProperty([0.09, 0.09, 0.09, 1])
     label_color = ListProperty([1, 1, 1, 1])
     box_bg_color = ListProperty([0, 0, 0, 1])
     box_text_color = ListProperty([1, 1, 1, 1])
