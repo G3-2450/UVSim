@@ -131,6 +131,10 @@ class LeftPaneWidget(BoxLayout):
             return
 
         memory = app.CoreInstance.load_program(file_path)
+        if memory is None:
+            root.ids.uvsim_console.add_message("Error: Failed to load memory.")
+            return
+            
         self.populate_memory(root, memory)
 
 
@@ -201,6 +205,10 @@ class LeftPaneWidget(BoxLayout):
             return
 
         memory = app.CoreInstance.load_program(file_path)
+        if memory is None:
+            root.ids.uvsim_console.add_message("Error: Failed to load memory.")
+            return
+            
         self.populate_memory(root, memory)
         app.CoreInstance.run_program()
         #print("Program execution finished.")
