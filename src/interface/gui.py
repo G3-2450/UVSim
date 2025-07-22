@@ -156,6 +156,9 @@ class LeftPaneWidget(BoxLayout):
                 return
             
             memory = app.CoreInstance.load_program(file_path)
+            if memory is None:
+                root.ids.uvsim_console.add_message("Failed to load program: file too long or invalid format.")
+                return
 
             # app = App.get_running_app()
             # root = app.root

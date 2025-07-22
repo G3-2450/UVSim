@@ -23,6 +23,10 @@ class UVSimCore:
         try:
             with open(filename, 'r') as f:
                 for i, line in enumerate(f):
+                    if i >= 250:
+                        print("Error: File exceeds memory limit.")
+                        self.memory = [0] *250 # clear memory again
+                        return None
                     line = line.strip()
                     if line and (line.startswith('+') or line.startswith('-')):
                         self.memory[i] = int(line)
