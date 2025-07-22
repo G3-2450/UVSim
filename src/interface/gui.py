@@ -87,9 +87,7 @@ class LeftPaneWidget(BoxLayout):
                 label = row.children[1]
                 label.color = (1, 1, 1, 1)
 
-    def upload_file(self): 
-        # Opens a popup with the FileChooserListView window allowing the user to choose a .txt file. 
-        # Once a file is selected, the Next button is clicked, passing the file to the editor popup.
+    def upload_file(self):
         file_chooser = FileChooserListView(filters=['*.txt'], size_hint_y=0.9)
         btn_next = Button(text='Next', size_hint_y=0.1)
         btn_cancel = Button(text='Cancel', size_hint_y=0.1)
@@ -105,19 +103,35 @@ class LeftPaneWidget(BoxLayout):
                                 auto_dismiss=False)
 
         def open_editor(instance):
-        # Handles transition of the .txt file from the file chooser popup to the editor popup.
             if not file_chooser.selection:
                 return
             file_path = file_chooser.selection[0]
             self.file_popup.dismiss()
-            self.open_editor_popup(file_path)
-        
+            with open(file_path, 'r') as f:
+                content = f.read()
+            self.ids.editor_input.text = content
+
         def cancel_file_popup(instance):
             self.file_popup.dismiss()
 
         btn_next.bind(on_release=open_editor)
         btn_cancel.bind(on_release=cancel_file_popup)
         self.file_popup.open()
+
+    def save_editor_to_file(self):
+        content = self.ids.editor_input.text
+        with open("user_program.txt", "w") as out:
+            out.write(content)
+
+        app = App.get_running_app()
+        root = app.root
+        file_path = "user_program.txt"
+        if not os.path.exists(file_path):
+            root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
+            return
+
+        memory = app.CoreInstance.load_program(file_path)
+        self.populate_memory(root, memory)
 
 
     def open_editor_popup(self, file_path):
@@ -156,9 +170,6 @@ class LeftPaneWidget(BoxLayout):
                 return
             
             memory = app.CoreInstance.load_program(file_path)
-            if memory is None:
-                root.ids.uvsim_console.add_message("Failed to load program: file too long or invalid format.")
-                return
 
             # app = App.get_running_app()
             # root = app.root
@@ -175,9 +186,10 @@ class LeftPaneWidget(BoxLayout):
     def populate_memory(self, root, memory):
         memory_box = root.ids.mem_reg_display.ids.memory_box
         for i in range(100):
-            mem_row = memory_box.children[249 - i] #reverse stacked
+            mem_row = memory_box.children[99 - i]    #reverse stacked
             text_input = mem_row.children[0]
-            text_input.text = f"{memory[i]:05d}"
+            text_input.text = f"{memory[i]:+06d}"    # for six-digit signed numbers
+
 
     def run_button(self):
         app = App.get_running_app()
@@ -211,9 +223,10 @@ class LeftPaneWidget(BoxLayout):
         # update memory on gui
         memory_box = root.ids.mem_reg_display.ids.memory_box
         for i in range(100):
-            row = memory_box.children[249 - i]
+            row = memory_box.children[99 - i]
             mem_input = row.children[0]
-            mem_input.text = f"{core.memory[i]:+05d}"
+            mem_input.text = f"{core.memory[i]:+06d}"   # also for runtime step update
+
 
 class MemRegWidget(BoxLayout):
     # Sample 100 memory slots to test scrollability 
@@ -222,11 +235,11 @@ class MemRegWidget(BoxLayout):
 
     def populate_memory(self):
         memory_box = self.ids.memory_box
-        for i in range(250):
+        for i in range(100):
             row = BoxLayout(
                 orientation = 'horizontal',
                 size_hint_y = None,
-                height = dp(30),
+                height = dp(40),
                 spacing = dp(8)
             )
 
@@ -257,7 +270,7 @@ class MemRegWidget(BoxLayout):
             row.add_widget(mem_input)
             memory_box.add_widget(row)
 
-    bg_color = ListProperty([0.09, 0.09, 0.09, 1])
+    bg_color = ListProperty([0.1608, 0.1608, 0.1608, 1])
     label_color = ListProperty([1, 1, 1, 1])
     box_bg_color = ListProperty([0, 0, 0, 1])
     box_text_color = ListProperty([1, 1, 1, 1])
