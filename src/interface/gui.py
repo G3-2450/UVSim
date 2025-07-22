@@ -185,8 +185,8 @@ class LeftPaneWidget(BoxLayout):
 
     def populate_memory(self, root, memory):
         memory_box = root.ids.mem_reg_display.ids.memory_box
-        for i in range(100):
-            mem_row = memory_box.children[99 - i]    #reverse stacked
+        for i in range(250):
+            mem_row = memory_box.children[249 - i]    #reverse stacked
             text_input = mem_row.children[0]
             text_input.text = f"{memory[i]:+06d}"    # for six-digit signed numbers
 
@@ -222,8 +222,8 @@ class LeftPaneWidget(BoxLayout):
 
         # update memory on gui
         memory_box = root.ids.mem_reg_display.ids.memory_box
-        for i in range(100):
-            row = memory_box.children[99 - i]
+        for i in range(250):
+            row = memory_box.children[249 - i]
             mem_input = row.children[0]
             mem_input.text = f"{core.memory[i]:+06d}"   # also for runtime step update
 
@@ -235,7 +235,7 @@ class MemRegWidget(BoxLayout):
 
     def populate_memory(self):
         memory_box = self.ids.memory_box
-        for i in range(100):
+        for i in range(250):
             row = BoxLayout(
                 orientation = 'horizontal',
                 size_hint_y = None,
