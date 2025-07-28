@@ -38,10 +38,14 @@ class LeftPaneWidget(BoxLayout):
     bg_color = ListProperty([0.09, 0.09, 0.09, 1])
     text_color = ListProperty([1, 1, 1, 1])
     button_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
-    active_tab_bg_color = ListProperty([0.3, 0.3, 0.3, 1])
+    active_tab_bg_color = ListProperty([1, 0, 0, 1])
     button_text_color = ListProperty([1, 1, 1, 1])
     header_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
     header_text_color = ListProperty([1, 1, 1, 1])
+
+    #  updates tab button when _active_file_path changes
+    def on__active_file_path(self, instance, value):
+        self._update_tab_buttons()
 
     #theme toggle handler
     def toggle_theme(self, mode):
@@ -108,30 +112,23 @@ class LeftPaneWidget(BoxLayout):
                                 auto_dismiss=False)
 
         def open_editor(instance):
-            # if not file_chooser.selection:
-            #     return
-            # file_path = file_chooser.selection[0]
-            # self.file_popup.dismiss()
-            # with open(file_path, 'r') as f:
-            #     content = f.read()
-            # self.ids.editor_input.text = content
-
             if not file_chooser.selection:
                 return
-            file_path = file_chooser.selection[0]
-            file_name = os.path.basename(file_path)
+            original_file_path = os.path.normpath(file_chooser.selection[0])
+            file_name = os.path.basename(original_file_path)
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            target_db_path = os.path.normpath(os.path.join(current_dir, '..', 'db', file_name))
 
-            if any(f['path'] == file_path for f in self._loaded_files):
+            if any(os.path.normpath(f['path']) == target_db_path for f in self._loaded_files):
                 self.file_popup.dismiss()
-                self.show_file_in_editor(file_path)
+                self.show_file_in_editor(target_db_path)
                 self.save_editor_to_file()
                 return
 
-            self._loaded_files.append({'name': file_name, 'path': file_path})
-            self._update_tab_buttons()
+            self._loaded_files.append({'name': file_name, 'path': target_db_path})
             self.file_popup.dismiss()
-            self.show_file_in_editor(file_path)
-            self.save_editor_to_file
+            self.show_file_in_editor(target_db_path)
+            self.save_editor_to_file()
 
         def cancel_file_popup(instance):
             self.file_popup.dismiss()
@@ -150,7 +147,7 @@ class LeftPaneWidget(BoxLayout):
                 size_hint = (1, None),
                 height = dp(40),
                 background_normal = "",
-                background_color = self.active_tab_bg_color if file_info['path'] == self._active_file_path else self.button_bg_color,
+                background_color = self.active_tab_bg_color if os.path.normpath(file_info['path']) == os.path.normpath(self._active_file_path) else self.button_bg_color,
                 color = self.button_text_color
             )
             btn.bind(on_release = lambda a, path = file_info['path']: self.show_file_in_editor(path))
@@ -168,7 +165,7 @@ class LeftPaneWidget(BoxLayout):
             with open(file_path, 'r') as f:
                 content = f.read()
             self.ids.editor_input.text = content
-            self._active_file_path = file_path
+            self._active_file_path = os.path.normpath(file_path)
 
             # load program
             memory = app.CoreInstance.load_program(file_path)
@@ -203,8 +200,7 @@ class LeftPaneWidget(BoxLayout):
         app = App.get_running_app()
         root = app.root
 
-        self._active_file_path = os.path.normpath(save_path) 
-        self._update_tab_buttons()
+        self._active_file_path = os.path.normpath(save_path)
 
         memory = app.CoreInstance.load_program(self._active_file_path)
         if memory is None:
@@ -212,58 +208,6 @@ class LeftPaneWidget(BoxLayout):
             return
             
         self.populate_memory(root, memory)
-
-
-    # def open_editor_popup(self, file_path):
-    #     #Opens the editor popup where the user can choose to edit the contents of the selected .txt file.
-    #     #Once Save button is clicked, the file is saved as 'user_program.txt".
-    #     #Args: file_path(str) : this argument is a string the represents the file path to the selected .txt file.
-        
-    #     with open(file_path, 'r') as f:
-    #         content = f.read()
-
-    #     self.editor_input = TextInput(text=content, multiline=True, size_hint_y=0.9)
-    #     btn_save = Button(text='Save', size_hint_y=0.1)
-    #     btn_cancel = Button(text='Cancel', size_hint_y=0.1)
-
-    #     layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
-    #     layout.add_widget(self.editor_input)
-    #     layout.add_widget(btn_save)
-    #     layout.add_widget(btn_cancel)
-
-    #     self.editor_popup = Popup(title='Edit & Save File',
-    #                               content=layout,
-    #                               size_hint=(0.9, 0.9),
-    #                               auto_dismiss=False)
-
-    #     def save_to_user_program(_):
-    #         current_dir = os.path.dirname(os.path.abspath(__file__))
-    #         user_program_path = os.path.join(current_dir, '..', 'db', 'user_program.txt')
-
-    #         if not os.path.exists(user_program_path):
-    #             root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found. 2")
-    #             return
-            
-    #         # saves the .txt file after edits as 'user_program.txt' and then closes the editor popup
-    #         with open(user_program_path, "w") as out:
-    #             out.write(self.editor_input.text)
-
-    #         app = App.get_running_app()
-    #         root = app.root
-            
-    #         memory = app.CoreInstance.load_program(user_program_path)
-
-    #         # app = App.get_running_app()
-    #         # root = app.root
-    #         self.populate_memory(root, memory)
-    #         self.editor_popup.dismiss()
-        
-    #     def cancel_editor_popup(_):
-    #         self.editor_popup.dismiss()
-
-    #     btn_save.bind(on_release=save_to_user_program)
-    #     btn_cancel.bind(on_release=cancel_editor_popup)
-    #     self.editor_popup.open()
 
     def populate_memory(self, root, memory):
         memory_box = root.ids.mem_reg_display.ids.memory_box
@@ -276,7 +220,7 @@ class LeftPaneWidget(BoxLayout):
     def run_button(self):
         app = App.get_running_app()
         root = app.root
-        file_path = self._active_file_path
+        file_path = os.path.normpath(self._active_file_path)
 
         if not file_path or not os.path.exists(file_path):
             print(f"Error: file {file_path} not found. 3")
@@ -290,10 +234,6 @@ class LeftPaneWidget(BoxLayout):
         self.populate_memory(root, memory)
         app.CoreInstance.run_program()
         #print("Program execution finished.")
-
-
-        # root.ids.uvsim_console.add_message("Program execution finished")
-        # print("Program execution finished")
 
     def step_button(self):
         app = App.get_running_app()
