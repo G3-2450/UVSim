@@ -64,7 +64,12 @@ goal -> navigate to a specified location in the program if the last operation re
 ##### HALT  
 Actor -> Student  
 system -> the HALT command in UVSim.  
-goal -> Stop the program.  
+goal -> Stop the program.
+
+##### File Conversion
+Acotr -> Student
+System -> Selects a 4 digit file
+Goal -> 4 digit file is converted to 6 digit allowing for 'old' file types to be used
 
 
 ## GUI functions
@@ -88,3 +93,8 @@ goal -> Graphically display the ouputs from running the user's file one command 
 Actor -> Student  
 system -> Change the color scheme.
 goal -> Provide color options for the user.
+
+#### TABS
+Actor -> Student
+System -> Being able to use multiple files and switch between them
+Goal -> Flexibility with file selection
