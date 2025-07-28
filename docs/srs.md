@@ -18,7 +18,7 @@
 ## Functional Requirements
 
 ### FR-01 – Load Program File
-**Description**: The system must allow users to read, write, load, and parse a `.txt` or `.ml` program file into memory.
+**Description**: The system must allow users to read, write, load, and parse multiple `.txt` or `.ml` program files into memory.
 
 ### FR-02 – Halt Program
 **Description**: On instruction (10) or end of file, halt program.
@@ -65,5 +65,7 @@
 ### FR-16 – Store Instruction
 **Description**: On op code (21), store the value from the accumulator to the designated memory location.
 
+### FR-17 - File Conversion
+**Description**: The system must be able to convert 4-digit files into 6-digit, allowing for 'old' file types to be used.
 
 
