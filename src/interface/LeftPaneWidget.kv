@@ -2,7 +2,7 @@
 # Left pane - vertical
     # Header
     # Body - horizontal
-        # Tabs
+        # Tabs + upload + theme
         # Text Editor and buttons - vertical
             # Text Editor
             # Buttons
@@ -39,7 +39,7 @@
             text_size: self.size
             color: root.header_text_color
 
-    # MAIN BODY
+    # MAIN BODY - Tabs and editor
     BoxLayout:
         orientation: 'horizontal'
         spacing: dp(22)
@@ -52,16 +52,24 @@
             size_hint_x: 1/3
 
             ScrollView:
-                id: tab_box
+                id: tab_scroll_view
                 bar_width: dp(10)
                 do_scroll_x: False
-                Button:
-                    text: 'Upload'
-                    size_hint: 1, None
-                    height: dp(40)
-                    background_normal: ""
-                    background_color: root.button_bg_color
-                    color: root.button_text_color
+
+                BoxLayout:
+                    id: tab_buttons_container
+                    orientation: 'vertical'
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    Button:
+                        text: 'Upload'
+                        size_hint: 1, None
+                        height: dp(40)
+                        background_normal: ""
+                        background_color: root.button_bg_color
+                        color: root.button_text_color
 
 
             Button:
