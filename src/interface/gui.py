@@ -17,7 +17,7 @@ from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.filechooser import FileChooserListView
-from core.main import UVSimCore
+from core.oldmain import UVSimCore # change to core.oldmain to test with old main
 
 
 from core.BasicMLOps import BasicMLOps
