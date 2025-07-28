@@ -26,7 +26,7 @@
 - This will run the UVSim GUI.
 
 ### Features
-- Upload file - select a .txt file with basicML commands for UVSim to run
+- Upload file - select one or multiple .txt files with basicML commands for UVSim to run
 - Run - runs the selected file
 - Step - runs the selected file one line at a time
 - Theme - select a theme for the interface
