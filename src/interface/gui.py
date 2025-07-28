@@ -120,17 +120,22 @@ class LeftPaneWidget(BoxLayout):
 
     def save_editor_to_file(self):
         content = self.ids.editor_input.text
-        with open("user_program.txt", "w") as out:
+
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        user_program_path = os.path.join(current_dir, '..', 'db', 'user_program.txt')
+
+        with open(user_program_path, "w") as out:
             out.write(content)
 
         app = App.get_running_app()
         root = app.root
-        file_path = "user_program.txt"
-        if not os.path.exists(file_path):
-            root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
+
+        
+        if not os.path.exists(user_program_path):
+            root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found. 1")
             return
 
-        memory = app.CoreInstance.load_program(file_path)
+        memory = app.CoreInstance.load_program(user_program_path)
         if memory is None:
             root.ids.uvsim_console.add_message("Error: Failed to load memory.")
             return
@@ -161,19 +166,21 @@ class LeftPaneWidget(BoxLayout):
                                   auto_dismiss=False)
 
         def save_to_user_program(_):
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            user_program_path = os.path.join(current_dir, '..', 'db', 'user_program.txt')
+
+            if not os.path.exists(user_program_path):
+                root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found. 2")
+                return
+            
             # saves the .txt file after edits as 'user_program.txt' and then closes the editor popup
-            with open("user_program.txt", "w") as out:
+            with open(user_program_path, "w") as out:
                 out.write(self.editor_input.text)
 
             app = App.get_running_app()
             root = app.root
-
-            file_path = "user_program.txt"
-            if not os.path.exists(file_path):
-                root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
-                return
             
-            memory = app.CoreInstance.load_program(file_path)
+            memory = app.CoreInstance.load_program(user_program_path)
 
             # app = App.get_running_app()
             # root = app.root
@@ -201,7 +208,7 @@ class LeftPaneWidget(BoxLayout):
         file_path = "user_program.txt"
 
         if not os.path.exists(file_path):
-            print("Error: 'user_program.txt' not found.")
+            print("Error: 'user_program.txt' not found. 3")
             return
 
         memory = app.CoreInstance.load_program(file_path)
