@@ -6,39 +6,10 @@ from core.BasicMLOps import BasicMLOps
 from kivy.clock import Clock
 
 class InstructionExecutor:
-    # Opcodes
-    READ = 10
-    WRITE = 11
-    LOAD = 20
-    STORE = 21
-    ADD = 30
-    SUBTRACT = 31
-    DIVIDE = 32
-    MULTIPLY = 33
-    BRANCH = 40
-    BRANCHNEG = 41
-    BRANCHZERO = 42
-    HALT = 43
-    
     def __init__(self, memory_model, get_input_callback):
         self.memory_model = memory_model
         self.get_input = get_input_callback
-    # Dispatch table
-        self.opcode_handlers = {
-            self.READ: self._handle_read_op,
-            self.WRITE: self._handle_write_op,
-            self.LOAD: self._handle_load_op,
-            self.STORE: self._handle_store_op,
-            self.ADD: self._handle_add_op,
-            self.SUBTRACT: self._handle_subtract_op,
-            self.DIVIDE: self._handle_divide_op,
-            self.MULTIPLY: self._handle_multiply_op,
-            self.BRANCH: self._handle_branch_op,
-            self.BRANCHNEG: self._handle_branch_neg_op,
-            self.BRANCHZERO: self._handle_branch_zero_op,
-            self.HALT: self._handle_halt_op
-        }
-        
+
     def run_program(self):
         Clock.schedule_interval(self._run_step, 0.1)
 
@@ -48,80 +19,65 @@ class InstructionExecutor:
         self.step()
 
     def step(self):
-        if self.halted or self.program_counter >= len(self.memory):
+        if self.memory_model.halted or self.memory_model.program_counter >= len(self.memory_model.memory):
             print("Program Halted or out of bounds")
             return
 
-        instruction = self.memory[self.program_counter]
-        opcode = abs(instruction) // 1000
-        operand = abs(instruction) % 1000
+        instruction = self.memory_model.memory[self.memory_model.program_counter]
+        # For 6-digit words: first 3 digits = opcode, last 3 digits = operand
+        opcode = abs(instruction) // 1000    # first three digits (e.g. 010)
+        operand = abs(instruction) % 1000    # last three digits (e.g. 007)
 
-        if operand < 0 or operand >= self.memory_size:
-            print(f"Invalid memory access at line {self.program_counter}: {operand}")
-            self.halted = True
+        if operand < 0 or operand > 249:
+            print(f"Invalid memory access at line {self.memory_model.program_counter}: {operand}")
+            self.memory_model.halted = True
             return
 
-        handler = self.opcode_handlers.get(opcode, self._handle_invalid_op)
-
-        if opcode == self.READ:
-            # Handle READ async input
-            handler(operand)
+        if opcode == 10:
+            # READ opcode = 010
+            self.get_input(f"READ to memory [{operand}]:", lambda value: self._handle_read(operand, value))
+            return
+        elif opcode == 11:
+            BasicMLOps.write(self.memory_model.memory, operand)
+        elif opcode == 20:
+            self.memory_model.accumulator = BasicMLOps.load(self.memory_model.memory, operand, self.memory_model.accumulator)
+        elif opcode == 21:
+            BasicMLOps.store(self.memory_model.memory, operand, self.memory_model.accumulator)
+        elif opcode == 30:
+            self.memory_model.accumulator = BasicMLOps.add(self.accumulator, self.memory[operand])
+        elif opcode == 31:
+            self.accumulator = BasicMLOps.subtract(self.memory_model.accumulator, self.memory_model.memory[operand])
+        elif opcode == 32:
+            try:
+                self.memory_model.accumulator = BasicMLOps.divide(self.memory_model.accumulator, self.memory_model.memory[operand])
+            except ZeroDivisionError as e:
+                print(e)
+                return
+        elif opcode == 33:
+            self.memory_model.accumulator = BasicMLOps.multiply(self.memory_model.accumulator, self.memory_model.memory[operand])
+        elif opcode == 40:
+            self.memory_model.program_counter = BasicMLOps.branch(operand)
+            return
+        elif opcode == 41:
+            self.memory_model.program_counter = BasicMLOps.branch_neg(self.memory_model.program_counter, operand, self.memory_model.accumulator)
+            return
+        elif opcode == 42:
+            self.program_counter = BasicMLOps.branch_zero(self.memory_model.program_counter, operand, self.memory_model.accumulator)
+            return
+        elif opcode == 43:
+            BasicMLOps.halt()
+            self.memory_model.halted = True
+            return
+        else:
+            print(f"Unknown instruction: {instruction}")
+            self.memory_model.halted = True
             return
 
-        handler(operand)
-        if opcode not in {self.BRANCH, self.BRANCHNEG, self.BRANCHZERO, self.HALT}:
-            self.program_counter += 1
+        self.memory_model.program_counter += 1  # increment if no branch
 
-    # Handlers
-    def _handle_read_op(self, operand):
-        self.get_input(f"READ to memory [{operand}]:", lambda value: self._handle_read_value(operand, value))
-
-    def _handle_read_value(self, address, value):
+    def _handle_read(self, address, value):
         try:
-            self.memory[address] = int(value)
-            self.program_counter += 1
+            self.memory_model.memory[address] = int(value)
+            self.memory_model.program_counter += 1
         except ValueError:
             print("Invalid input. Please enter an integer.")
-
-    def _handle_write_op(self, operand):
-        BasicMLOps.write(self.memory, operand)
-
-    def _handle_load_op(self, operand):
-        self.accumulator = BasicMLOps.load(self.memory, operand, self.accumulator)
-
-    def _handle_store_op(self, operand):
-        BasicMLOps.store(self.memory, operand, self.accumulator)
-
-    def _handle_add_op(self, operand):
-        self.accumulator = BasicMLOps.add(self.accumulator, self.memory[operand])
-
-    def _handle_subtract_op(self, operand):
-        self.accumulator = BasicMLOps.subtract(self.accumulator, self.memory[operand])
-
-    def _handle_divide_op(self, operand):
-        try:
-            self.accumulator = BasicMLOps.divide(self.accumulator, self.memory[operand])
-        except ZeroDivisionError as e:
-            print(e)
-            self.halted = True
-
-    def _handle_multiply_op(self, operand):
-        self.accumulator = BasicMLOps.multiply(self.accumulator, self.memory[operand])
-
-    def _handle_branch_op(self, operand):
-        self.program_counter = BasicMLOps.branch(operand)
-
-    def _handle_branch_neg_op(self, operand):
-        self.program_counter = BasicMLOps.branch_neg(self.program_counter, operand, self.accumulator)
-
-    def _handle_branch_zero_op(self, operand):
-        self.program_counter = BasicMLOps.branch_zero(self.program_counter, operand, self.accumulator)
-
-    def _handle_halt_op(self, operand):
-        BasicMLOps.halt()
-        self.halted = True
-
-    def _handle_invalid_op(self, operand):
-        print(f"Unknown instruction at PC {self.program_counter}")
-        self.halted = True
-
