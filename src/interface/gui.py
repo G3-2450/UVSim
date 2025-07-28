@@ -38,7 +38,7 @@ class LeftPaneWidget(BoxLayout):
     bg_color = ListProperty([0.09, 0.09, 0.09, 1])
     text_color = ListProperty([1, 1, 1, 1])
     button_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
-    active_tab_bg_color = ListProperty([1, 0, 0, 1])
+    active_tab_bg_color = ListProperty([0.0, 0.3, 0.15, 1])
     button_text_color = ListProperty([1, 1, 1, 1])
     header_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
     header_text_color = ListProperty([1, 1, 1, 1])
