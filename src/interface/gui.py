@@ -17,35 +17,70 @@ from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.filechooser import FileChooserListView
-from core.oldmain import UVSimCore # change to core.oldmain to test with old main
-
-
+from kivy.graphics import Color, RoundedRectangle
+from kivy.uix.behaviors import ButtonBehavior
+from core.main import UVSimCore
 from core.BasicMLOps import BasicMLOps
 
 Builder.load_file('ConsoleWidget.kv')
 Builder.load_file('LeftPaneWidget.kv')
 Builder.load_file('MemRegWidget.kv')
 
+class TabButton(ButtonBehavior, Label):
+    # tab button widget
+    def __init__(self, tab_name, file_path, content, **kwargs):
+        super().__init__(**kwargs)
+        self.tab_name = tab_name
+        self.file_path = file_path
+        self.content = content
+        self.text = tab_name
+        self.size_hint_y = None
+        self.height = dp(40)
+        self.size_hint_x = 1
+        self.text_size = (None, None)
+        self.halign = 'center'
+        self.valign = 'middle'
+        self.is_active = False
+        self.bind(pos=self.update_graphics, size=self.update_graphics)
+        self.update_appearance()
+    
+    def update_graphics(self, *args):
+        self.update_appearance()
+    
+    def update_appearance(self):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            if self.is_active:
+                Color(0.0, 0.518, 0.239, 1)  # Active tab color
+            else:
+                Color(0.2, 0.2, 0.2, 1)  # Inactive tab color
+            RoundedRectangle(pos=self.pos, size=self.size, radius=[dp(5)])
+        
+        if self.is_active:
+            self.color = (1, 1, 1, 1)
+        else:
+            self.color = (0.8, 0.8, 0.8, 1)
+
 class LeftPaneWidget(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.tabs = []  # List to store tab information
+        self.active_tab_index = -1
+        
+        # Add a default "New File" tab
+        Clock.schedule_once(self.add_default_tab, 0.1)
 
-    #TAB SWITCHING
-    _loaded_files = ListProperty([])
-    _active_file_path = StringProperty("") 
+    def add_default_tab(self, dt):
+        """Add a default empty tab"""
+        self.add_tab("New File", None, "")
 
     #UI theme colors
     bg_color = ListProperty([0.09, 0.09, 0.09, 1])
     text_color = ListProperty([1, 1, 1, 1])
     button_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
-    active_tab_bg_color = ListProperty([0.0, 0.3, 0.15, 1])
     button_text_color = ListProperty([1, 1, 1, 1])
     header_bg_color = ListProperty([0.0, 0.518, 0.239, 1])
     header_text_color = ListProperty([1, 1, 1, 1])
-
-    #  updates tab button when _active_file_path changes
-    def on__active_file_path(self, instance, value):
-        self._update_tab_buttons()
 
     #theme toggle handler
     def toggle_theme(self, mode):
@@ -96,118 +131,235 @@ class LeftPaneWidget(BoxLayout):
                 label = row.children[1]
                 label.color = (1, 1, 1, 1)
 
+    def add_tab(self, tab_name, file_path, content):
+        #Add a new tab with the given content
+        # Store tab information first
+        tab_info = {
+            'name': tab_name,
+            'file_path': file_path,
+            'content': content,
+            'button': None,
+            'modified': False
+        }
+        tab_index = len(self.tabs)
+        self.tabs.append(tab_info)
+        
+        # Create tab button with correct index
+        tab_button = TabButton(tab_name, file_path, content)
+        tab_button.bind(on_press=lambda x: self.switch_tab(tab_index))
+        tab_info['button'] = tab_button
+        
+        # Add button to tab container
+        if hasattr(self, 'ids') and 'tab_container' in self.ids:
+            self.ids.tab_container.add_widget(tab_button)
+        
+        # Switch to the new tab
+        self.switch_tab(tab_index)
+    
+    def switch_tab(self, tab_index):
+        #Switch to the specified tab
+        if tab_index < 0 or tab_index >= len(self.tabs):
+            return
+        
+        # Save current tab content if there's an active tab
+        if self.active_tab_index >= 0:
+            current_content = self.ids.editor_input.text
+            self.tabs[self.active_tab_index]['content'] = current_content
+            self.tabs[self.active_tab_index]['button'].is_active = False
+            self.tabs[self.active_tab_index]['button'].update_appearance()
+        
+        # Switch to new tab
+        self.active_tab_index = tab_index
+        tab_info = self.tabs[tab_index]
+        
+        # Update editor content
+        self.ids.editor_input.text = tab_info['content']
+        
+        # Update tab button appearance
+        tab_info['button'].is_active = True
+        tab_info['button'].update_appearance()
+    
+    def close_tab(self, tab_index):
+        #Close the specified tab
+        if len(self.tabs) <= 1:
+            return  # Don't close the last tab
+        
+        if tab_index < 0 or tab_index >= len(self.tabs):
+            return
+        
+        # Remove tab button from UI
+        tab_button = self.tabs[tab_index]['button']
+        if hasattr(self, 'ids') and 'tab_container' in self.ids:
+            self.ids.tab_container.remove_widget(tab_button)
+        
+        # Remove tab from list
+        self.tabs.pop(tab_index)
+        
+        # Adjust active tab index
+        if tab_index == self.active_tab_index:
+            # If closing active tab, switch to previous tab or first tab
+            new_active = max(0, tab_index - 1)
+            self.active_tab_index = -1
+            self.switch_tab(new_active)
+        elif tab_index < self.active_tab_index:
+            self.active_tab_index -= 1
+
     def upload_file(self):
         file_chooser = FileChooserListView(filters=['*.txt'], size_hint_y=0.9)
-        btn_next = Button(text='Next', size_hint_y=0.1)
+        btn_next = Button(text='Open in New Tab', size_hint_y=0.1)
         btn_cancel = Button(text='Cancel', size_hint_y=0.1)
 
         layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
         layout.add_widget(file_chooser)
-        layout.add_widget(btn_next)
-        layout.add_widget(btn_cancel)
+        
+        button_layout = BoxLayout(orientation='horizontal', size_hint_y=0.1, spacing=10)
+        button_layout.add_widget(btn_next)
+        button_layout.add_widget(btn_cancel)
+        layout.add_widget(button_layout)
 
         self.file_popup = Popup(title='Select BasicML File',
                                 content=layout,
                                 size_hint=(0.9, 0.9),
                                 auto_dismiss=False)
 
-        def open_editor(instance):
+        def open_in_new_tab(instance):
             if not file_chooser.selection:
                 return
-            original_file_path = os.path.normpath(file_chooser.selection[0])
-            file_name = os.path.basename(original_file_path)
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            target_db_path = os.path.normpath(os.path.join(current_dir, '..', 'db', file_name))
-
-            if any(os.path.normpath(f['path']) == target_db_path for f in self._loaded_files):
-                self.file_popup.dismiss()
-                self.show_file_in_editor(target_db_path)
-                self.save_editor_to_file()
-                return
-
-            self._loaded_files.append({'name': file_name, 'path': target_db_path})
+            file_path = file_chooser.selection[0]
             self.file_popup.dismiss()
-            self.show_file_in_editor(target_db_path)
-            self.save_editor_to_file()
+            
+            try:
+                with open(file_path, 'r') as f:
+                    content = f.read()
+                
+                # Extract filename for tab name
+                tab_name = os.path.basename(file_path)
+                
+                # Add new tab
+                self.add_tab(tab_name, file_path, content)
+                
+            except Exception as e:
+                app = App.get_running_app()
+                root = app.root
+                root.ids.uvsim_console.add_message(f"Error loading file: {str(e)}")
 
         def cancel_file_popup(instance):
             self.file_popup.dismiss()
 
-        btn_next.bind(on_release=open_editor)
-        btn_cancel.bind(on_release=cancel_file_popup)
+        btn_next.bind(on_press=open_in_new_tab)
+        btn_cancel.bind(on_press=cancel_file_popup)
         self.file_popup.open()
+    
+    def save_current_tab(self):
+        #Save the current tab's content
+        if self.active_tab_index < 0:
+            return
         
-
-    def _update_tab_buttons(self):
-        self.ids.tab_buttons_container.clear_widgets()
-
-        for file_info in self._loaded_files:
-            btn = Button (
-                text = file_info['name'],
-                size_hint = (1, None),
-                height = dp(40),
-                background_normal = "",
-                background_color = self.active_tab_bg_color if os.path.normpath(file_info['path']) == os.path.normpath(self._active_file_path) else self.button_bg_color,
-                color = self.button_text_color
-            )
-            btn.bind(on_release = lambda a, path = file_info['path']: self.show_file_in_editor(path))
-            self.ids.tab_buttons_container.add_widget(btn)
-
-    def show_file_in_editor(self, file_path):
+        current_tab = self.tabs[self.active_tab_index]
+        current_content = self.ids.editor_input.text
+        current_tab['content'] = current_content
+        
+        # If tab has a file path, save to that file
+        if current_tab['file_path']:
+            try:
+                with open(current_tab['file_path'], 'w') as f:
+                    f.write(current_content)
+                current_tab['modified'] = False
+            except Exception as e:
+                app = App.get_running_app()
+                root = app.root
+                root.ids.uvsim_console.add_message(f"Error saving file: {str(e)}")
+        else:
+            with open("user_program.txt", "w") as out:
+                out.write(current_content)
+            current_tab['file_path'] = "user_program.txt"
+            current_tab['name'] = "user_program.txt"
+            current_tab['button'].text = "user_program.txt"
+            current_tab['button'].tab_name = "user_program.txt"
+            current_tab['modified'] = False
+        
+        self.load_current_tab_program()
+    
+    def load_current_tab_program(self):
+        """Load the current tab's program into memory"""
+        if self.active_tab_index < 0:
+            return
+        
+        current_tab = self.tabs[self.active_tab_index]
+        if not current_tab['file_path']:
+            return
+        
         app = App.get_running_app()
         root = app.root
-
-        # clear mem and console
-        root.ids.mem_reg_display.populate_memory()
-        root.ids.uvsim_console.clear_console()
-
-        try:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            self.ids.editor_input.text = content
-            self._active_file_path = os.path.normpath(file_path)
-
-            # load program
-            memory = app.CoreInstance.load_program(file_path)
-            if memory is None:
-                root.ids.uvsim_console.add_message(f"Error: Failed to load program from {os.path.basename(file_path)}.")
-            else:
-                self.populate_memory(root, memory)
-
-            self._update_tab_buttons() # Update tab colors
-
-        except Exception as e:
-            error_message = f"Error loading file {os.path.basename(file_path)}: {e}"
-            self.ids.editor_input.text = error_message
-            root.ids.uvsim_console.add_message(error_message)
-            self._active_file_path = ""
-
-    def save_editor_to_file(self):
-        if not self._active_file_path:
-            app = App.get_running_app()
-            app.root.ids.uvsim_console.add_message("Error: No active file to save to. Please select or upload a file.")
+        
+        if not os.path.exists(current_tab['file_path']):
+            root.ids.uvsim_console.add_message(f"Error: '{current_tab['file_path']}' not found.")
             return
 
-        content = self.ids.editor_input.text
-
-        file_name = os.path.basename(self._active_file_path)
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        save_path = os.path.join(current_dir, '..', 'db', file_name)
-
-        with open(save_path, "w") as out:
-            out.write(content)
-
-        app = App.get_running_app()
-        root = app.root
-
-        self._active_file_path = os.path.normpath(save_path)
-
-        memory = app.CoreInstance.load_program(self._active_file_path)
+        memory = app.CoreInstance.load_program(current_tab['file_path'])
         if memory is None:
             root.ids.uvsim_console.add_message("Error: Failed to load memory.")
             return
             
         self.populate_memory(root, memory)
+
+    def new_tab(self):
+        #Create a new empty tab
+        tab_count = len([tab for tab in self.tabs if tab['name'].startswith('New File')])
+        tab_name = f"New File {tab_count + 1}" if tab_count > 0 else "New File"
+        self.add_tab(tab_name, None, "")
+
+    def save_editor_to_file(self):
+        self.save_current_tab()
+
+    def open_editor_popup(self, file_path):
+        #Opens the editor popup where the user can choose to edit the contents of the selected .txt file.
+        #Once Save button is clicked, the file is saved as 'user_program.txt".
+        #Args: file_path(str) : this argument is a string the represents the file path to the selected .txt file.
+        
+        with open(file_path, 'r') as f:
+            content = f.read()
+
+        self.editor_input = TextInput(text=content, multiline=True, size_hint_y=0.9)
+        btn_save = Button(text='Save', size_hint_y=0.1)
+        btn_cancel = Button(text='Cancel', size_hint_y=0.1)
+
+        layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        layout.add_widget(self.editor_input)
+        layout.add_widget(btn_save)
+        layout.add_widget(btn_cancel)
+
+        self.editor_popup = Popup(title='Edit & Save File',
+                                  content=layout,
+                                  size_hint=(0.9, 0.9),
+                                  auto_dismiss=False)
+
+        def save_to_user_program(_):
+            # saves the .txt file after edits as 'user_program.txt' and then closes the editor popup
+            with open("user_program.txt", "w") as out:
+                out.write(self.editor_input.text)
+
+            app = App.get_running_app()
+            root = app.root
+
+            file_path = "user_program.txt"
+            if not os.path.exists(file_path):
+                root.ids.uvsim_console.add_message("Error: 'user_program.txt' not found.")
+                return
+            
+            memory = app.CoreInstance.load_program(file_path)
+
+            # app = App.get_running_app()
+            # root = app.root
+            self.populate_memory(root, memory)
+            self.editor_popup.dismiss()
+        
+        def cancel_editor_popup(_):
+            self.editor_popup.dismiss()
+
+        btn_save.bind(on_release=save_to_user_program)
+        btn_cancel.bind(on_release=cancel_editor_popup)
+        self.editor_popup.open()
 
     def populate_memory(self, root, memory):
         memory_box = root.ids.mem_reg_display.ids.memory_box
@@ -216,17 +368,25 @@ class LeftPaneWidget(BoxLayout):
             text_input = mem_row.children[0]
             text_input.text = f"{memory[i]:+06d}"    # for six-digit signed numbers
 
-
     def run_button(self):
+        # First save the current tab
+        self.save_current_tab()
+        
+        if self.active_tab_index < 0:
+            return
+        
+        current_tab = self.tabs[self.active_tab_index]
+        if not current_tab['file_path']:
+            return
+        
         app = App.get_running_app()
         root = app.root
-        file_path = os.path.normpath(self._active_file_path)
-
-        if not file_path or not os.path.exists(file_path):
-            print(f"Error: file {file_path} not found. 3")
+        
+        if not os.path.exists(current_tab['file_path']):
+            root.ids.uvsim_console.add_message(f"Error: '{current_tab['file_path']}' not found.")
             return
 
-        memory = app.CoreInstance.load_program(file_path)
+        memory = app.CoreInstance.load_program(current_tab['file_path'])
         if memory is None:
             root.ids.uvsim_console.add_message("Error: Failed to load memory.")
             return
@@ -234,6 +394,9 @@ class LeftPaneWidget(BoxLayout):
         self.populate_memory(root, memory)
         app.CoreInstance.run_program()
         #print("Program execution finished.")
+
+        # root.ids.uvsim_console.add_message("Program execution finished")
+        # print("Program execution finished")
 
     def step_button(self):
         app = App.get_running_app()
@@ -311,7 +474,7 @@ class ConsoleWidget(BoxLayout):
     #         InputFunction=labda user_input: self.isEven(user_input)
     #     )
 
-    # To add a message to the UVSim console just call print()
+    # To add a message to the console ouput, call add_message("a string you want printed")
 
 
     CallbackFunction = ObjectProperty(None, allownone=True)
@@ -332,11 +495,6 @@ class ConsoleWidget(BoxLayout):
             callback_function( input )
         else:
             self.add_message("Error: No input callback function provided")
-
-    def clear_console(self):
-        self.ids.console_output.text = ""
-        self.ids.console_input.disabled = False
-        self.ids.console_input.hint_text = ""
 
     def add_message( self, text=None ):
         if text == None:
