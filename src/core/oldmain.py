@@ -4,12 +4,43 @@ import os
 import sys
 
 class UVSimCore:
+    # Opcodes
+    READ = 10
+    WRITE = 11
+    LOAD = 20
+    STORE = 21
+    ADD = 30
+    SUBTRACT = 31
+    DIVIDE = 32
+    MULTIPLY = 33
+    BRANCH = 40
+    BRANCHNEG = 41
+    BRANCHZERO = 42
+    HALT = 43
+
     def __init__(self, get_input_callback):
-        self.get_input = get_input_callback  # gets user input from console
-        self.memory = [0] * 250
+        self.get_input = get_input_callback
+        self.memory_size = 250
+        self.memory = [0] * self.memory_size
         self.accumulator = 0
         self.program_counter = 0
         self.halted = False
+
+        # Dispatch table
+        self.opcode_handlers = {
+            self.READ: self._handle_read_op,
+            self.WRITE: self._handle_write_op,
+            self.LOAD: self._handle_load_op,
+            self.STORE: self._handle_store_op,
+            self.ADD: self._handle_add_op,
+            self.SUBTRACT: self._handle_subtract_op,
+            self.DIVIDE: self._handle_divide_op,
+            self.MULTIPLY: self._handle_multiply_op,
+            self.BRANCH: self._handle_branch_op,
+            self.BRANCHNEG: self._handle_branch_neg_op,
+            self.BRANCHZERO: self._handle_branch_zero_op,
+            self.HALT: self._handle_halt_op
+        }
 
     def convert_to_6_digit(self, content_lines):
         converted = []
@@ -30,7 +61,7 @@ class UVSimCore:
         return converted
 
     def load_program(self, filename):
-        self.memory = [0] * 250
+        self.memory = [0] * self.memory_size
         self.accumulator = 0
         self.program_counter = 0
         self.halted = False
@@ -39,21 +70,18 @@ class UVSimCore:
             with open(filename, 'r') as f:
                 lines = [line.strip() for line in f if line.strip()]
 
-            if len(lines) > 250:
-                raise ValueError("Program has more than 250 lines.")
+            if len(lines) > self.memory_size:
+                raise ValueError(f"Program has more than {self.memory_size} lines.")
 
-            # Detect file format
-            if all(len(line) == 5 for line in lines):  # 4-digit format (+1007)
+            if all(len(line) == 5 for line in lines):
                 print("Detected 4-digit file. Converting to 6-digit format...")
                 lines = self.convert_to_6_digit(lines)
-
-            elif not all(len(line) == 7 for line in lines):  # 6-digit format (+010007)
+            elif not all(len(line) == 7 for line in lines):
                 raise ValueError("Mixed or invalid instruction format detected.")
 
             for i, line in enumerate(lines):
                 if not (line.startswith('+') or line.startswith('-')):
                     raise ValueError(f"Invalid format at line {i + 1}: {line}")
-                # Convert signed string to int and store in memory
                 self.memory[i] = int(line)
 
         except FileNotFoundError:
@@ -79,62 +107,74 @@ class UVSimCore:
             return
 
         instruction = self.memory[self.program_counter]
-        # For 6-digit words: first 3 digits = opcode, last 3 digits = operand
-        opcode = abs(instruction) // 1000    # first three digits (e.g. 010)
-        operand = abs(instruction) % 1000    # last three digits (e.g. 007)
+        opcode = abs(instruction) // 1000
+        operand = abs(instruction) % 1000
 
-        if operand < 0 or operand > 249:
+        if operand < 0 or operand >= self.memory_size:
             print(f"Invalid memory access at line {self.program_counter}: {operand}")
             self.halted = True
             return
 
-        if opcode == 10:
-            # READ opcode = 010
-            self.get_input(f"READ to memory [{operand}]:", lambda value: self._handle_read(operand, value))
-            return
-        elif opcode == 11:
-            BasicMLOps.write(self.memory, operand)
-        elif opcode == 20:
-            self.accumulator = BasicMLOps.load(self.memory, operand, self.accumulator)
-        elif opcode == 21:
-            BasicMLOps.store(self.memory, operand, self.accumulator)
-        elif opcode == 30:
-            self.accumulator = BasicMLOps.add(self.accumulator, self.memory[operand])
-        elif opcode == 31:
-            self.accumulator = BasicMLOps.subtract(self.accumulator, self.memory[operand])
-        elif opcode == 32:
-            try:
-                self.accumulator = BasicMLOps.divide(self.accumulator, self.memory[operand])
-            except ZeroDivisionError as e:
-                print(e)
-                return
-        elif opcode == 33:
-            self.accumulator = BasicMLOps.multiply(self.accumulator, self.memory[operand])
-        elif opcode == 40:
-            self.program_counter = BasicMLOps.branch(operand)
-            return
-        elif opcode == 41:
-            self.program_counter = BasicMLOps.branch_neg(self.program_counter, operand, self.accumulator)
-            return
-        elif opcode == 42:
-            self.program_counter = BasicMLOps.branch_zero(self.program_counter, operand, self.accumulator)
-            return
-        elif opcode == 43:
-            BasicMLOps.halt()
-            self.halted = True
-            return
-        else:
-            print(f"Unknown instruction: {instruction}")
-            self.halted = True
+        handler = self.opcode_handlers.get(opcode, self._handle_invalid_op)
+
+        if opcode == self.READ:
+            # Handle READ async input
+            handler(operand)
             return
 
-        self.program_counter += 1  # increment if no branch
+        handler(operand)
+        if opcode not in {self.BRANCH, self.BRANCHNEG, self.BRANCHZERO, self.HALT}:
+            self.program_counter += 1
 
-    def _handle_read(self, address, value):
+    # Handlers
+    def _handle_read_op(self, operand):
+        self.get_input(f"READ to memory [{operand}]:", lambda value: self._handle_read_value(operand, value))
+
+    def _handle_read_value(self, address, value):
         try:
             self.memory[address] = int(value)
             self.program_counter += 1
         except ValueError:
             print("Invalid input. Please enter an integer.")
 
+    def _handle_write_op(self, operand):
+        BasicMLOps.write(self.memory, operand)
 
+    def _handle_load_op(self, operand):
+        self.accumulator = BasicMLOps.load(self.memory, operand, self.accumulator)
+
+    def _handle_store_op(self, operand):
+        BasicMLOps.store(self.memory, operand, self.accumulator)
+
+    def _handle_add_op(self, operand):
+        self.accumulator = BasicMLOps.add(self.accumulator, self.memory[operand])
+
+    def _handle_subtract_op(self, operand):
+        self.accumulator = BasicMLOps.subtract(self.accumulator, self.memory[operand])
+
+    def _handle_divide_op(self, operand):
+        try:
+            self.accumulator = BasicMLOps.divide(self.accumulator, self.memory[operand])
+        except ZeroDivisionError as e:
+            print(e)
+            self.halted = True
+
+    def _handle_multiply_op(self, operand):
+        self.accumulator = BasicMLOps.multiply(self.accumulator, self.memory[operand])
+
+    def _handle_branch_op(self, operand):
+        self.program_counter = BasicMLOps.branch(operand)
+
+    def _handle_branch_neg_op(self, operand):
+        self.program_counter = BasicMLOps.branch_neg(self.program_counter, operand, self.accumulator)
+
+    def _handle_branch_zero_op(self, operand):
+        self.program_counter = BasicMLOps.branch_zero(self.program_counter, operand, self.accumulator)
+
+    def _handle_halt_op(self, operand):
+        BasicMLOps.halt()
+        self.halted = True
+
+    def _handle_invalid_op(self, operand):
+        print(f"Unknown instruction at PC {self.program_counter}")
+        self.halted = True
