@@ -85,16 +85,5 @@
 - **Scrum Master:** Taylor
 - **Scribe:** Tim
 
-##### Milestone 6:
-- **Deadline:** 
-- **Scrum Master:** Tim
-- **Scribe:** Nathaniel
-
-##### Milestone 7:
-- **Deadline:** 
-- **Scrum Master:** Nathaniel
-- **Scribe:** Taylor
----
-
 **Zenhub (integrated into Github):**
 https://shorturl.at/1RH8Z
