@@ -403,18 +403,18 @@ class LeftPaneWidget(BoxLayout):
         core = app.CoreInstance
         root = app.root
 
-        core.step()
+        core.executor.step()
 
         # update registers on gui
-        root.ids.mem_reg_display.ids.accumulator.text = f"{core.accumulator:+05d}"
-        root.ids.mem_reg_display.ids.program_counter.text = f"{core.program_counter:02d}"
+        root.ids.mem_reg_display.ids.accumulator.text = f"{core.executor.memory_model.accumulator:+05d}"
+        root.ids.mem_reg_display.ids.program_counter.text = f"{core.executor.memory_model.program_counter:02d}"
 
         # update memory on gui
         memory_box = root.ids.mem_reg_display.ids.memory_box
         for i in range(250):
             row = memory_box.children[249 - i]
             mem_input = row.children[0]
-            mem_input.text = f"{core.memory[i]:+06d}"   # also for runtime step update
+            mem_input.text = f"{core.memory_model.memory[i]:+06d}"   # also for runtime step update
 
 
 class MemRegWidget(BoxLayout):
