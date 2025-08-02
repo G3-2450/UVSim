@@ -1,20 +1,22 @@
 from BasicMLOps import BasicMLOps
 from unittest.mock import patch
 
-# --- READ Tests ---
-def test_read_valid_input():
-    memory = [0] * 100
-    with patch('builtins.input', return_value='42'):
-        BasicMLOps.read(memory, 7)
-    if memory[7] != 42:
-        raise Exception("READ valid input failed")
+# READ was moved out of BasicMLOps
 
-def test_read_invalid_then_valid_input():
-    memory = [0] * 100
-    with patch('builtins.input', side_effect=['abc', '15']):
-        BasicMLOps.read(memory, 5)
-    if memory[5] != 15:
-        raise Exception("READ invalid then valid input failed")
+# --- READ Tests ---
+# def test_read_valid_input():
+#     memory = [0] * 100
+#     with patch('builtins.input', return_value='42'):
+#         BasicMLOps.read(memory, 7)
+#     if memory[7] != 42:
+#         raise Exception("READ valid input failed")
+
+# def test_read_invalid_then_valid_input():
+#     memory = [0] * 100
+#     with patch('builtins.input', side_effect=['abc', '15']):
+#         BasicMLOps.read(memory, 5)
+#     if memory[5] != 15:
+#         raise Exception("READ invalid then valid input failed")
 
 # --- WRITE Tests ---
 def test_write_output():
@@ -65,8 +67,8 @@ def test_store_negative():
 # --- Custom Dot-Style Test Runner ---
 if __name__ == '__main__':
     tests = [
-        test_read_valid_input,
-        test_read_invalid_then_valid_input,
+        # test_read_valid_input,
+        # test_read_invalid_then_valid_input,
         test_write_output,
         test_write_empty_slot,
         test_load_value,

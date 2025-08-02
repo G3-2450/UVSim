@@ -1,5 +1,7 @@
 '''
 Loads the progarm
+Converts 4bit files to 6bit files
+
 '''
 
 class ProgramLoader:

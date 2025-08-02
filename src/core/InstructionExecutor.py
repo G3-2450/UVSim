@@ -40,7 +40,7 @@ class InstructionExecutor:
         elif opcode == 11:
             BasicMLOps.write(self.memory_model.memory, operand)
         elif opcode == 20:
-            self.memory_model.accumulator = BasicMLOps.load(self.memory_model.memory, operand, self.memory_model.accumulator)
+            self.memory_model.accumulator = BasicMLOps.load(self.memory_model.memory, operand)
         elif opcode == 21:
             BasicMLOps.store(self.memory_model.memory, operand, self.memory_model.accumulator)
         elif opcode == 30:
