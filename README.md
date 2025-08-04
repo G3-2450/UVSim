@@ -17,7 +17,7 @@
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#program-demo">Program Demo</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites">Dependencies & Prerequisites</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#installation--running-uvsim-gui">Installation and Running UVSim</a>
-- <a href="">Features</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#features">Features</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#uvsim-instruction-set-">UVSim Instruction Set Opcodes</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#class--architecture-diagrams">Class & Architecture Diagrams</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#final-srs-document">Final SRS Document</a>
