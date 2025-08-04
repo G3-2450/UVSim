@@ -12,6 +12,9 @@
 - Timothy Faupusa  
 ---
 
+### Table of Contents
+https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites
+
 ### Description and Project Overview
 
 UVSim (Utah Valley Simulator) is a **machine-level simulator** designed for CS2450 to help students understand how memory, registers, and low-level instruction execution works.  
