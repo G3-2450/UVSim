@@ -28,7 +28,7 @@ The goal is to give students a hands-on experience with **machine language execu
 ## Program Demo
 
 **GUI Screenshot:**  
-![UVSim Demo]([docs/screenshots/demo.png](https://github.com/G3-2450/UVSim/blob/3479e13ab920ade390a99c9b2918d68704b4acfa/docs/Final-Submission/final_demo.png))  
+![UVSim Demo](https://github.com/G3-2450/UVSim/blob/3479e13ab920ade390a99c9b2918d68704b4acfa/docs/Final-Submission/final_demo.png)  
 
 **Final Presentation Slides:**  
 [Click to view slides](https://github.com/G3-2450/UVSim/blob/15d73cbaa22955383965b6b795f56c41b89ee86c/docs/Final-Submission/CS2450%20Final%20Group%20Presentation%20(1).pdf)
