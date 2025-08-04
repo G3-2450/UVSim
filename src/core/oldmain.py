@@ -4,6 +4,10 @@ import os
 import sys
 
 class UVSimCore:
+    """
+    UVSimCore handles the core functionality of the BasicML simulator, including
+    memory, program loading, instruction execution, and control flow.
+    """
     # Opcodes
     READ = 10
     WRITE = 11
@@ -19,6 +23,12 @@ class UVSimCore:
     HALT = 43
 
     def __init__(self, get_input_callback):
+        """
+        Initialize the simulator with default memory and register values.
+        Args:
+            get_input_callback (function): Callback function for READ instructions
+                                            to handle asynchronous user input.
+        """
         self.get_input = get_input_callback
         self.memory_size = 250
         self.memory = [0] * self.memory_size
@@ -43,6 +53,13 @@ class UVSimCore:
         }
 
     def convert_to_6_digit(self, content_lines):
+        """
+        Convert 4-digit machine instructions to 6-digit format with leading zeros.
+        Args:
+            content_lines (list): List of string lines containing 4-digit instructions.
+        Returns:
+            list: List of converted 6-digit instructions.
+        """
         converted = []
         for line in content_lines:
             line = line.strip()
@@ -61,6 +78,13 @@ class UVSimCore:
         return converted
 
     def load_program(self, filename):
+        """
+        Load a BasicML program from a file into memory.
+        Args:
+            filename (str): The path to the .txt file containing machine code.
+        Returns:
+            list or None: Memory array if successful, or None on error.
+        """
         self.memory = [0] * self.memory_size
         self.accumulator = 0
         self.program_counter = 0
@@ -94,14 +118,24 @@ class UVSimCore:
         return self.memory
 
     def run_program(self):
+    #Start timed execution of the loaded program. Executes in intervals.
         Clock.schedule_interval(self._run_step, 0.1)
 
     def _run_step(self, dt):
+        """
+        A timed step callback that runs one instruction per interval.
+
+        Args:
+            dt (float): Delta time passed by Kivy Clock.
+        """
         if self.halted or self.program_counter >= len(self.memory):
             return False
         self.step()
 
     def step(self):
+    #Execute a single instruction from memory at the current program counter.
+    #Handles branching and halting as necessary.
+
         if self.halted or self.program_counter >= len(self.memory):
             print("Program Halted or out of bounds")
             return
@@ -128,9 +162,22 @@ class UVSimCore:
 
     # Handlers
     def _handle_read_op(self, operand):
+        """
+        Initiates asynchronous input request for a READ instruction.
+
+        Args:
+            operand (int): Memory address to store the input.
+        """
         self.get_input(f"READ to memory [{operand}]:", lambda value: self._handle_read_value(operand, value))
 
     def _handle_read_value(self, address, value):
+        """
+        Handles the value returned from the user input callback.
+
+        Args:
+            address (int): Memory location to store the input.
+            value (str): Input string provided by the user.
+        """
         try:
             self.memory[address] = int(value)
             self.program_counter += 1
@@ -138,21 +185,57 @@ class UVSimCore:
             print("Invalid input. Please enter an integer.")
 
     def _handle_write_op(self, operand):
+        """
+        Execute WRITE: Print value at memory[operand].
+
+        Args:
+            operand (int): Memory address to read from.
+        """
         BasicMLOps.write(self.memory, operand)
 
     def _handle_load_op(self, operand):
+        """
+        Execute LOAD: Load value from memory[operand] into accumulator.
+
+        Args:
+            operand (int): Memory address to load.
+        """
         self.accumulator = BasicMLOps.load(self.memory, operand, self.accumulator)
 
     def _handle_store_op(self, operand):
+        """
+        Execute STORE: Store the accumulator into memory[operand].
+
+        Args:
+            operand (int): Memory address to store into.
+        """
         BasicMLOps.store(self.memory, operand, self.accumulator)
 
     def _handle_add_op(self, operand):
+        """
+        Execute ADD: Add value from memory[operand] to accumulator.
+
+        Args:
+            operand (int): Memory address to read from.
+        """
         self.accumulator = BasicMLOps.add(self.accumulator, self.memory[operand])
 
     def _handle_subtract_op(self, operand):
+        """
+        Execute SUBTRACT: Subtract memory[operand] from accumulator.
+
+        Args:
+            operand (int): Memory address to read from.
+        """
         self.accumulator = BasicMLOps.subtract(self.accumulator, self.memory[operand])
 
     def _handle_divide_op(self, operand):
+        """
+        Execute DIVIDE: Divide accumulator by memory[operand].
+
+        Args:
+            operand (int): Memory address to read from.
+        """
         try:
             self.accumulator = BasicMLOps.divide(self.accumulator, self.memory[operand])
         except ZeroDivisionError as e:
@@ -160,21 +243,57 @@ class UVSimCore:
             self.halted = True
 
     def _handle_multiply_op(self, operand):
+        """
+        Execute MULTIPLY: Multiply accumulator by memory[operand].
+
+        Args:
+            operand (int): Memory address to read from.
+        """
         self.accumulator = BasicMLOps.multiply(self.accumulator, self.memory[operand])
 
     def _handle_branch_op(self, operand):
+        """
+        Execute BRANCH: Unconditional jump to operand.
+
+        Args:
+            operand (int): Target instruction index.
+        """
         self.program_counter = BasicMLOps.branch(operand)
 
     def _handle_branch_neg_op(self, operand):
+        """
+        Execute BRANCHNEG: Jump to operand if accumulator is negative.
+
+        Args:
+            operand (int): Target instruction index.
+        """
         self.program_counter = BasicMLOps.branch_neg(self.program_counter, operand, self.accumulator)
 
     def _handle_branch_zero_op(self, operand):
+        """
+        Execute BRANCHZERO: Jump to operand if accumulator is zero.
+
+        Args:
+            operand (int): Target instruction index.
+        """
         self.program_counter = BasicMLOps.branch_zero(self.program_counter, operand, self.accumulator)
 
     def _handle_halt_op(self, operand):
+        """
+        Execute HALT: Stop the program.
+
+        Args:
+            operand (int): Unused operand.
+        """
         BasicMLOps.halt()
         self.halted = True
 
     def _handle_invalid_op(self, operand):
+        """
+        Handle an unknown or invalid opcode.
+
+        Args:
+            operand (int): Operand that was passed.
+        """
         print(f"Unknown instruction at PC {self.program_counter}")
         self.halted = True
