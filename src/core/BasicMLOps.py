@@ -19,51 +19,42 @@
 # HALT = 43 Pause the program
 
 class BasicMLOps:
-    # def __init__(self, console_input, callback):
-        # self.get_input = console_input
-        # self.callback = callback
-
     # IO OPERATIONS
-
-    # @staticmethod
-    # def read(self, memory, address):
-    #     while True:
-    #         try:
-    #             value = int(self.get_input(f"READ to memory [{address}]: "))
-    #             memory[address] = value
-    #             break
-    #         except ValueError:
-    #             print ("Invalid input. Please enter an integer.")
 
     @staticmethod
     def write(memory, address):
+        #Output the value at the given memory address.
         print(f"WRITE from memory[{address}]: {memory[address]}")
 
     @staticmethod
     def load(memory, address, accumulator):
+        #Load the value from the specified memory address into the accumulator.
         print(f"LOAD from memory[{address}]: {memory[address]}")
         return memory[address]
 
     @staticmethod
     def store(memory, address, accumulator):
+        #Store the current value of the accumulator into the specified memory address.
         print(f"STORE from accumulator to memory[{address}]: {accumulator}")
         memory[address] = accumulator
-
 
     # ARITHMETIC OPERATIONS
 
     @staticmethod
     def add(accumulator, memory_value):
+        #Add the memory value to the accumulator and return the result.
         print(f"ADD: {accumulator} + {memory_value}")
         return accumulator + memory_value
 
     @staticmethod
     def subtract(accumulator, memory_value):
+        #Subtract the memory value from the accumulator and return the result.
         print(f"SUBTRACT: {accumulator} - {memory_value}")
         return accumulator - memory_value
 
     @staticmethod
     def divide(accumulator, memory_value):
+        #Divide the accumulator by the memory value (integer division). Raise error if dividing by zero.
         if memory_value == 0:
             raise ZeroDivisionError("Cannot divide by zero.")
         print(f"DIVIDE: {accumulator} // {memory_value}")
@@ -71,46 +62,46 @@ class BasicMLOps:
 
     @staticmethod
     def multiply(accumulator, memory_value):
+        #Multiply the accumulator by the memory value and return the result.
         print(f"MULTIPLY: {accumulator} * {memory_value}")
         return accumulator * memory_value
-
 
     # CONTROL OPERATIONS
 
     @staticmethod
     def branch(nextProgramCounter):
-        if (nextProgramCounter < 0):
+        #Unconditionally branch to the specified memory address.
+        if nextProgramCounter < 0:
             raise Exception(f"the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
-        
         print(f"BRANCH: programCounter = nextProgramCounter: {nextProgramCounter}")
         return nextProgramCounter
-        
+
     @staticmethod
     def branch_neg(currentProgramCounter, nextProgramCounter, accumulator):
+        #Branch to a new memory location if the accumulator is negative, otherwise go to the next instruction.
         if accumulator >= 0:
             print(f"BRANCHNEG: programCounter = currentProgramCounter + 1: {currentProgramCounter + 1}")
             return currentProgramCounter + 1
-        
-        if (nextProgramCounter < 0):
+        if nextProgramCounter < 0:
             raise Exception(f"the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
-
         print(f"BRANCHNEG: programCounter = nextProgramCounter: {nextProgramCounter}")
         return nextProgramCounter
-            
+
     @staticmethod
     def branch_zero(currentProgramCounter, nextProgramCounter, accumulator):
+        #Branch to a new memory location if the accumulator is zero, otherwise go to the next instruction.
         if accumulator != 0:
             print(f"BRANCHZERO: programCounter = currentProgramCounter + 1: {currentProgramCounter + 1}")
             return currentProgramCounter + 1
-    
-        if (nextProgramCounter < 0):
+        if nextProgramCounter < 0:
             raise Exception(f"the nextProgramCounter is less than 0. nextProgramCounter = {nextProgramCounter}")
-
         print(f"BRANCHZERO: programCounter = nextProgramCounter: {nextProgramCounter}")
         return nextProgramCounter
-            
+
     @staticmethod
     def halt():
+        #Halt the execution of the program.
         print(f"PROGRAM HALTED")
         return None
+
     

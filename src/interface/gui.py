@@ -71,7 +71,7 @@ class LeftPaneWidget(BoxLayout):
         Clock.schedule_once(self.add_default_tab, 0.1)
 
     def add_default_tab(self, dt):
-        """Add a default empty tab"""
+        #Add a default empty tab
         self.add_tab("New File", None, "")
 
     #UI theme colors
@@ -223,6 +223,7 @@ class LeftPaneWidget(BoxLayout):
                                 auto_dismiss=False)
 
         def open_in_new_tab(instance):
+            #opens seleected filel in a new tab
             if not file_chooser.selection:
                 return
             file_path = file_chooser.selection[0]
@@ -244,6 +245,7 @@ class LeftPaneWidget(BoxLayout):
                 root.ids.uvsim_console.add_message(f"Error loading file: {str(e)}")
 
         def cancel_file_popup(instance):
+            #cancels the file selector popup
             self.file_popup.dismiss()
 
         btn_next.bind(on_press=open_in_new_tab)
@@ -281,7 +283,7 @@ class LeftPaneWidget(BoxLayout):
         self.load_current_tab_program()
     
     def load_current_tab_program(self):
-        """Load the current tab's program into memory"""
+        #Load the current tab's program into memory
         if self.active_tab_index < 0:
             return
         
@@ -310,6 +312,7 @@ class LeftPaneWidget(BoxLayout):
         self.add_tab(tab_name, None, "")
 
     def save_editor_to_file(self):
+        #saves the file to the current tab and saves contents for editor window
         self.save_current_tab()
 
     def open_editor_popup(self, file_path):
@@ -481,6 +484,11 @@ class ConsoleWidget(BoxLayout):
     _current_prompt = StringProperty( "" ) 
 
     def execute_command( self, input ):
+        '''
+        Execute a command entered into the console input.
+        Args: 
+            input (str): The user-entered input string.
+        '''
         print(f"Input recieved: { input }")
         self.ids.console_input.text = ""
 
@@ -497,6 +505,11 @@ class ConsoleWidget(BoxLayout):
             self.add_message("Error: No input callback function provided")
 
     def add_message( self, text=None ):
+        """
+        Add a message to the console output display.
+        Args:
+            text (str): Message to display.
+        """
         if text == None:
             return
 
@@ -510,12 +523,18 @@ class ConsoleWidget(BoxLayout):
         self.ids.console_output.text = newText
         Clock.schedule_once( self._scroll_to_bottom, 0.1 )
 
-    #added scroll to bottom funcion - console scolls to latest output
     def _scroll_to_bottom(self, *args):
+    #Auto-scroll the console view to the bottom after new output is added.
         scroll_view = self.ids.console_scroll_view
         scroll_view.scroll_y = 0
 
     def get_input(self, promptText="Enter value: ", InputFunction = None):
+        """
+        Prompt the user for input and handle the result via a callback.
+        Args:
+            promptText (str): The message shown in the input hint.
+            InputFunction (Callable): A function that receives the input string.
+        """
         if InputFunction == None:
             print("WARNING: get_input called with no callback function")
             return
@@ -525,18 +544,21 @@ class ConsoleWidget(BoxLayout):
         self.ids.console_input.disabled = False
         self.ids.console_input.focus = True
 
+
+#Main container widget for the entire UVSim GUI.
 class UVSimWindow(BoxLayout):
     pass
 
+#The main application class that sets up and runs the UVSim GUI.
 class UVSimApp(App):
     def build(self):
+    #Start the app and set up console redirection.
         Clock.schedule_once(self._setup_console_redirect, 0.1)
 
         return UVSimWindow()
     
     def _setup_console_redirect(self, dt):
-
-        # redirect std output to the custom console
+        #Redirect stdout to the GUI custome console and initialize UVSimCore.
         add_message_func = App.get_running_app().root.ids.uvsim_console.add_message
         sys.stdout = WriteToGuiConsole(add_message_func)
         # sys.stderr = WriteToGuiConsole(add_message_func)
@@ -544,6 +566,7 @@ class UVSimApp(App):
         # use get_input instead of input
         get_input_func = App.get_running_app().root.ids.uvsim_console.get_input
         self.CoreInstance = UVSimCore(get_input_func)
-    
+
+#Launch the UVSim GUI application.
 if __name__ == '__main__':
     UVSimApp().run()
