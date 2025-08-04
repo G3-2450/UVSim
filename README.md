@@ -13,8 +13,19 @@
 ---
 
 ### Table of Contents
-<a href="https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites">test</a>
-[Dependencies & Pre-requisites](https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites)
+<a href="">Description and Project Overview</a>
+<a href="">Program Demo/a>
+<a href="https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites">Dependencies & Prerequisites</a>
+<a href="">Installation and Running UVSim</a>
+<a href="">Features</a>
+<a href="">UVSim Instruction Set Opcodes</a>
+<a href="">Class & Architecture Diagrams</a>
+<a href="">Final SRS Document</a>
+<a href="">Testing</a>
+<a href="">Known Issues/Future Work</a>
+<a href="">Technology Used</a>
+<a href="">Prooject Timeline</a>
+<a href="">Retrospective Summary</a>
 
 ### Description and Project Overview
 
@@ -43,7 +54,7 @@ The goal is to give students a hands-on experience with **machine language execu
 - Python 3
 - Kivy (Insall with 'pip install kivy')
 
-### Installation & Runing UVSim (GUI)
+### Installation & Running UVSim (GUI)
 - In the console, navigate to the interface folder ('cd src/interface')
 - Run `python3 .\gui.py
 - This will run the UVSim GUI.
@@ -83,9 +94,6 @@ The goal is to give students a hands-on experience with **machine language execu
 
 **Class Diagram UML:**  
 ![UML png](https://github.com/G3-2450/UVSim/blob/198c4c63ba743b807bb17b92e922320283292ee4/docs/Final-Submission/UML%20class%20(3).png)
-
-**Sequence Diagram:**  
-![Sequence Diagram png](docs/screenshots/demo.png)
 
 ---
 
@@ -154,7 +162,7 @@ The goal is to give students a hands-on experience with **machine language execu
 **Zenhub (integrated into Github):**
 https://shorturl.at/1RH8Z
 
-**Final Retrospective Summary:**
+### Final Retrospective Summary
 
 [Retrospective Summary](https://github.com/G3-2450/UVSim/blob/26b67663bafef030850c9a56b0f76bed161adfa1/docs/Final-Submission/Retrospective.md)
 
