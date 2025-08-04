@@ -1,4 +1,4 @@
- # CS2450 Group 3 - UVSim  
+# CS2450 Group 3 - UVSim  
 
 
 **Utah Valley University**  
@@ -106,7 +106,6 @@ The goal is to give students a hands-on experience with **machine language execu
 ### Technology Used  
 - **Front End:** Python GUI - KIVY
 - **Back End:** Python   
-- **Dataase:**  
 - **Tools/Project Management:**
   - Zenhub: https://shorturl.at/1RH8Z
 ---
