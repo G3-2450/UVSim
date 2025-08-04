@@ -27,6 +27,8 @@
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#project-timeline-sprints--scrum-master-schedule">Prooject Timeline</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#final-retrospective-summary">Retrospective Summary</a>
 
+---
+
 ### Description and Project Overview
 
 UVSim (Utah Valley Simulator) is a **machine-level simulator** designed for CS2450 to help students understand how memory, registers, and low-level instruction execution works.  
@@ -54,6 +56,8 @@ The goal is to give students a hands-on experience with **machine language execu
 - Python 3
 - Kivy (Insall with 'pip install kivy')
 
+---
+
 ### Installation & Running UVSim (GUI)
 - In the console, navigate to the interface folder ('cd src/interface')
 - Run `python3 .\gui.py
@@ -69,6 +73,8 @@ The goal is to give students a hands-on experience with **machine language execu
 - **Console Output:** See program output and prompts for input directly in the GUI  
 - **Theme Toggle:** Switch between dark mode and light mode  
 - **Error Handling:** Gracefully handles errors and invalid input from the user
+
+---
 
 ### UVSim Instruction Set Opcodes
 - **I/O Operations**
@@ -159,13 +165,12 @@ The goal is to give students a hands-on experience with **machine language execu
 
 ---
 
-**Zenhub (integrated into Github):**
-https://shorturl.at/1RH8Z
-
----
-
 ### Final Retrospective Summary
 
 [Retrospective Summary](https://github.com/G3-2450/UVSim/blob/26b67663bafef030850c9a56b0f76bed161adfa1/docs/Final-Submission/Retrospective.md)
 
 ---
+
+**Zenhub (integrated into Github):**
+https://shorturl.at/1RH8Z
+
