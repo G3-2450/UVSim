@@ -44,6 +44,8 @@ The goal is to give students a hands-on experience with **machine language execu
 - Run `python3 .\gui.py
 - This will run the UVSim GUI.
 
+---
+
 ### Features
 - **File Upload:** Load one or multiple `.txt` files with BasicML instructions  
 - **Run Program:** Execute the program in memory until HALT  
@@ -96,7 +98,7 @@ The goal is to give students a hands-on experience with **machine language execu
 ### Testing
 
 **Testing Coverage Report:**  
-![UVSim Testing Coverage Report](docs/Final-Submission/test-coverage.png)  
+![UVSim Testing Coverage Report](docs/screenshots/test-coverage.png)  
 
 **Program Tests:**  
 [Click to view slides](https://github.com/G3-2450/UVSim/tree/15d73cbaa22955383965b6b795f56c41b89ee86c/tests)
@@ -143,5 +145,13 @@ The goal is to give students a hands-on experience with **machine language execu
 - **Scrum Master:** Taylor
 - **Scribe:** Tim
 
+---
+
 **Zenhub (integrated into Github):**
 https://shorturl.at/1RH8Z
+
+**Final Retrospective Summary:**
+
+[Retrospective Summary](https://github.com/G3-2450/UVSim/blob/26b67663bafef030850c9a56b0f76bed161adfa1/docs/Final-Submission/Retrospective.md)
+
+---
