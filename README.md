@@ -53,23 +53,23 @@ The goal is to give students a hands-on experience with **machine language execu
 - **Theme Toggle:** Switch between dark mode and light mode  
 - **Error Handling:** Gracefully handles errors and invalid input from the user
 
-### UVSim Console Commands
+### UVSim Instruction Set Opcodes
 - **I/O Operations**
-  - READ = 10        Read value from keyoboard into a specific memory location.   
-  - WRITE = 11       Write value from a specific memory location to the screen.
+  - READ = 010        Read value from keyoboard into a specific memory location.   
+  - WRITE = 011       Write value from a specific memory location to the screen.
 - **Load/Store Operations**    
-  - LOAD = 20        Load value from a specific memory location to the accumulator.  
-  - STORE = 21       Store value from the accumulator to a specific memory location.   
+  - LOAD = 020        Load value from a specific memory location to the accumulator.  
+  - STORE = 021       Store value from the accumulator to a specific memory location.   
 - **Arithmetic Operations**
-  - ADD = 30         Add value from a specific memory location to the value in the accumulator.  
-  - SUBTRACT = 31    Subtract value from a specific memory location from the value in the accumulator.  
-  - DIVIDE = 32      Divide the value in the accumulator by the value in a specific memory location.  
-  - MULTIPLY = 33    Multiply the value in the accumulator by the value in a specific memory location. 
+  - ADD = 030         Add value from a specific memory location to the value in the accumulator.  
+  - SUBTRACT = 031    Subtract value from a specific memory location from the value in the accumulator.  
+  - DIVIDE = 032      Divide the value in the accumulator by the value in a specific memory location.  
+  - MULTIPLY = 033    Multiply the value in the accumulator by the value in a specific memory location. 
 - **Control/Flow Operations** 
-  - BRANCH = 40      Branch to a specific memory location.  
-  - BRANCHNEG = 41   Branch to a specific memory location if the value in the accumulator is negative.  
-  - BRANCHZERO = 42  Branch to a specific memory location if the value in the accumulator is zero.  
-  - HALT = 43        Stop the program.  
+  - BRANCH = 040      Branch to a specific memory location.  
+  - BRANCHNEG = 041   Branch to a specific memory location if the value in the accumulator is negative.  
+  - BRANCHZERO = 042  Branch to a specific memory location if the value in the accumulator is zero.  
+  - HALT = 043        Stop the program.  
 
 ---
 
