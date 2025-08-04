@@ -13,7 +13,7 @@
 ---
 
 ### Table of Contents
-https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites
+[Dependencies & Pre-requisites](https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites)
 
 ### Description and Project Overview
 
