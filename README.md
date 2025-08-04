@@ -13,19 +13,19 @@
 ---
 
 ### Table of Contents
-- <a href="">Description and Project Overview</a>
-- <a href="">Program Demo/a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#description-and-project-overview">Description and Project Overview</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#program-demo">Program Demo</a>
 - <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites">Dependencies & Prerequisites</a>
-- <a href="">Installation and Running UVSim</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#installation--running-uvsim-gui">Installation and Running UVSim</a>
 - <a href="">Features</a>
-- <a href="">UVSim Instruction Set Opcodes</a>
-- <a href="">Class & Architecture Diagrams</a>
-- <a href="">Final SRS Document</a>
-- <a href="">Testing</a>
-- <a href="">Known Issues/Future Work</a>
-- <a href="">Technology Used</a>
-- <a href="">Prooject Timeline</a>
-- <a href="">Retrospective Summary</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#uvsim-instruction-set-">UVSim Instruction Set Opcodes</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#class--architecture-diagrams">Class & Architecture Diagrams</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#final-srs-document">Final SRS Document</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#testing">Testing</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#known-issues--future-work">Known Issues/Future Work</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#technology-used">Technology Used</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#project-timeline-sprints--scrum-master-schedule">Prooject Timeline</a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#final-retrospective-summary">Retrospective Summary</a>
 
 ### Description and Project Overview
 
@@ -161,6 +161,8 @@ The goal is to give students a hands-on experience with **machine language execu
 
 **Zenhub (integrated into Github):**
 https://shorturl.at/1RH8Z
+
+---
 
 ### Final Retrospective Summary
 
