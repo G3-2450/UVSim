@@ -69,3 +69,18 @@
 **Description**: The system must be able to convert 4-digit files into 6-digit, allowing for 'old' file types to be used.
 
 
+## Features Section
+
+- **File Upload:** Load one or multiple `.txt` files with BasicML instructions
+   
+- **Run Program:** Execute the program in memory until HALT
+
+- **Step Execution:** Execute one instruction at a time for teaching/demo purposes
+ 
+- **Memory & Register Display:** View 250 memory locations, accumulator, and program counter
+
+- **Console Output:** See program output and prompts for input directly in the GUI
+
+- **Theme Toggle:** Switch between dark mode and light mode
+
+- **Error Handling:** Gracefully handles errors and invalid input from the user
