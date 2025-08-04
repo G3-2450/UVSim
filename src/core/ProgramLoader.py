@@ -52,9 +52,11 @@ class ProgramLoader:
 
         except FileNotFoundError:
             print("Error: File not found.")
+            raise
             return None
         except ValueError as e:
             print(f"Error: {e}")
+            raise
             return None
 
         return self.memory_model.memory
