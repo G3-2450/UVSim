@@ -83,6 +83,16 @@ The goal is to give students a hands-on experience with **machine language execu
 
 ---
 
+### Final SRS Document
+
+**User Stories/Use Cases**
+
+**Functional Specifications**
+
+[srs.md](https://github.com/G3-2450/UVSim/blob/bd88fe4a44f97645f5edb43e8041bccfa9a390c6/docs/Final-Submission/srs.md)
+
+---
+
 ### Testing
 
 **Testing Coverage Report:**  
