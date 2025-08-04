@@ -1,4 +1,4 @@
- # CS2450 Group 3 - UVSim  
+# CS2450 Group 3 - UVSim  
 
 
 **Utah Valley University**  
@@ -28,7 +28,7 @@ The goal is to give students a hands-on experience with **machine language execu
 ## Program Demo
 
 **GUI Screenshot:**  
-![UVSim Demo](docs/screenshots/demo.png)  
+![UVSim Demo](https://github.com/G3-2450/UVSim/blob/3479e13ab920ade390a99c9b2918d68704b4acfa/docs/Final-Submission/final_demo.png)  
 
 **Final Presentation Slides:**  
 [Click to view slides](https://github.com/G3-2450/UVSim/blob/15d73cbaa22955383965b6b795f56c41b89ee86c/docs/Final-Submission/CS2450%20Final%20Group%20Presentation%20(1).pdf)
@@ -53,23 +53,23 @@ The goal is to give students a hands-on experience with **machine language execu
 - **Theme Toggle:** Switch between dark mode and light mode  
 - **Error Handling:** Gracefully handles errors and invalid input from the user
 
-### UVSim Console Commands
+### UVSim Instruction Set Opcodes
 - **I/O Operations**
-  - READ = 10        Read value from keyoboard into a specific memory location.   
-  - WRITE = 11       Write value from a specific memory location to the screen.
+  - READ = 010        Read value from keyoboard into a specific memory location.   
+  - WRITE = 011       Write value from a specific memory location to the screen.
 - **Load/Store Operations**    
-  - LOAD = 20        Load value from a specific memory location to the accumulator.  
-  - STORE = 21       Store value from the accumulator to a specific memory location.   
+  - LOAD = 020        Load value from a specific memory location to the accumulator.  
+  - STORE = 021       Store value from the accumulator to a specific memory location.   
 - **Arithmetic Operations**
-  - ADD = 30         Add value from a specific memory location to the value in the accumulator.  
-  - SUBTRACT = 31    Subtract value from a specific memory location from the value in the accumulator.  
-  - DIVIDE = 32      Divide the value in the accumulator by the value in a specific memory location.  
-  - MULTIPLY = 33    Multiply the value in the accumulator by the value in a specific memory location. 
+  - ADD = 030         Add value from a specific memory location to the value in the accumulator.  
+  - SUBTRACT = 031    Subtract value from a specific memory location from the value in the accumulator.  
+  - DIVIDE = 032      Divide the value in the accumulator by the value in a specific memory location.  
+  - MULTIPLY = 033    Multiply the value in the accumulator by the value in a specific memory location. 
 - **Control/Flow Operations** 
-  - BRANCH = 40      Branch to a specific memory location.  
-  - BRANCHNEG = 41   Branch to a specific memory location if the value in the accumulator is negative.  
-  - BRANCHZERO = 42  Branch to a specific memory location if the value in the accumulator is zero.  
-  - HALT = 43        Stop the program.  
+  - BRANCH = 040      Branch to a specific memory location.  
+  - BRANCHNEG = 041   Branch to a specific memory location if the value in the accumulator is negative.  
+  - BRANCHZERO = 042  Branch to a specific memory location if the value in the accumulator is zero.  
+  - HALT = 043        Stop the program.  
 
 ---
 
@@ -83,10 +83,20 @@ The goal is to give students a hands-on experience with **machine language execu
 
 ---
 
+### Final SRS Document
+
+**User Stories/Use Cases**
+
+**Functional Specifications**
+
+[srs.md](https://github.com/G3-2450/UVSim/blob/bd88fe4a44f97645f5edb43e8041bccfa9a390c6/docs/Final-Submission/srs.md)
+
+---
+
 ### Testing
 
 **Testing Coverage Report:**  
-![UVSim Testing Coverage Report](docs/screenshots/demo.png)  
+![UVSim Testing Coverage Report](docs/Final-Submission/test-coverage.png)  
 
 **Program Tests:**  
 [Click to view slides](https://github.com/G3-2450/UVSim/tree/15d73cbaa22955383965b6b795f56c41b89ee86c/tests)
@@ -106,7 +116,6 @@ The goal is to give students a hands-on experience with **machine language execu
 ### Technology Used  
 - **Front End:** Python GUI - KIVY
 - **Back End:** Python   
-- **Dataase:**  
 - **Tools/Project Management:**
   - Zenhub: https://shorturl.at/1RH8Z
 ---

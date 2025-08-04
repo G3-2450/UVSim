@@ -36,7 +36,7 @@
 **Description**: The memory cell currently being executed must be highlighted in the GUI.
 
 ### FR-07 – READ Operation Prompt
-- **Description**: On a `READ` instruction (10), the GUI must prompt the user for input in the console.
+**Description**: On a `READ` instruction (10), the GUI must prompt the user for input in the console.
 
 ### FR-08 – WRITE Operation Output
 **Description**: On a `WRITE` instruction (11), the system should display the memory value in an console section.
