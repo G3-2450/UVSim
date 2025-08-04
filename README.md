@@ -13,19 +13,19 @@
 ---
 
 ### Table of Contents
-<a href="">Description and Project Overview</a>
-<a href="">Program Demo/a>
-<a href="https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites">Dependencies & Prerequisites</a>
-<a href="">Installation and Running UVSim</a>
-<a href="">Features</a>
-<a href="">UVSim Instruction Set Opcodes</a>
-<a href="">Class & Architecture Diagrams</a>
-<a href="">Final SRS Document</a>
-<a href="">Testing</a>
-<a href="">Known Issues/Future Work</a>
-<a href="">Technology Used</a>
-<a href="">Prooject Timeline</a>
-<a href="">Retrospective Summary</a>
+- <a href="">Description and Project Overview</a>
+- <a href="">Program Demo/a>
+- <a href="https://github.com/G3-2450/UVSim/blob/main/README.md#dependancies--prerequisites">Dependencies & Prerequisites</a>
+- <a href="">Installation and Running UVSim</a>
+- <a href="">Features</a>
+- <a href="">UVSim Instruction Set Opcodes</a>
+- <a href="">Class & Architecture Diagrams</a>
+- <a href="">Final SRS Document</a>
+- <a href="">Testing</a>
+- <a href="">Known Issues/Future Work</a>
+- <a href="">Technology Used</a>
+- <a href="">Prooject Timeline</a>
+- <a href="">Retrospective Summary</a>
 
 ### Description and Project Overview
 
