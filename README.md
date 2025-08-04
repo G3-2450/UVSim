@@ -86,7 +86,7 @@ The goal is to give students a hands-on experience with **machine language execu
 ### Testing
 
 **Testing Coverage Report:**  
-![UVSim Testing Coverage Report](docs/screenshots/demo.png)  
+![UVSim Testing Coverage Report](docs/screenshots/test-coverage.png)  
 
 **Program Tests:**  
 [Click to view slides](https://github.com/G3-2450/UVSim/tree/15d73cbaa22955383965b6b795f56c41b89ee86c/tests)
