@@ -116,6 +116,7 @@ The goal is to give students a hands-on experience with **machine language execu
 ### Testing
 
 **Testing Coverage Report:**  
+
 ![UVSim Testing Coverage Report](docs/Final-Submission/test-coverage.png)  
 
 **Program Tests:**  
